@@ -45,12 +45,8 @@ namespace WpfBonApp
 
             listboxProducten.Items.Add(stkpnl);
 
-
             //test toevoegen aan mandje
             listBoxMandje.Items.Add(txtBlock.Text);
-
-            //end test
-
 
 
             //listboxProducten.InvalidateArrange();
