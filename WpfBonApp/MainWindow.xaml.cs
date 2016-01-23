@@ -54,7 +54,8 @@ namespace WpfBonApp
 
         private void menuNieuw_Click(object sender, RoutedEventArgs e)
         {
-
+            Nieuw nieuwWindow = new Nieuw();
+            nieuwWindow.ShowDialog();
         }
     }
 }

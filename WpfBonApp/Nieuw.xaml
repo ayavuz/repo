@@ -1,0 +1,31 @@
+﻿<Window x:Class="WpfBonApp.Nieuw"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfBonApp"
+        mc:Ignorable="d"
+        Title="Nieuw Artikel" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100px"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Image x:Name="artImg" HorizontalAlignment="Left" Height="100" Width="100" VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <TextBox Name="txtImgPad" Height="15" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Name="btnKiesImg" Content="Kies afbeelding" Height="20" Margin="20 0 0 0" Click="btnKiesImg_Click"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

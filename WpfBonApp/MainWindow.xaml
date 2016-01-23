@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid>
+        
+        
         <Grid.ColumnDefinitions>
             <!-- <ColumnDefinition Width="79*"/> -->
             <ColumnDefinition Width="3*"/>
@@ -29,29 +31,6 @@
                     <UniformGrid Columns="5"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-
-            <!--
-            <StackPanel>
-                <Image Source="/img/img1.png" Width="100"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button Content="ADD"></Button>
-                    <TextBlock Grid.Column="1">blabla</TextBlock>
-                </Grid>
-            </StackPanel> !-->
-
-            <!-- <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/>
-            <Image Source="/img/img1.png" Width="100"/> !-->     
         </ListBox>
 
         <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="1">
