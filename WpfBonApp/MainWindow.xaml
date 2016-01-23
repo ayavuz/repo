@@ -1,0 +1,75 @@
+﻿<Window x:Class="WpfBonApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfBonApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- <ColumnDefinition Width="79*"/> -->
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem x:Name="menuStart" Height="40"  Header="Start" Click="menuStart_Click"/>
+            <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw" Click="menuNieuw_Click"/>
+        </Menu>
+
+        <ListBox x:Name="listboxProducten" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="0">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="5"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <!--
+            <StackPanel>
+                <Image Source="/img/img1.png" Width="100"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="ADD"></Button>
+                    <TextBlock Grid.Column="1">blabla</TextBlock>
+                </Grid>
+            </StackPanel> !-->
+
+            <!-- <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/>
+            <Image Source="/img/img1.png" Width="100"/> !-->     
+        </ListBox>
+
+        <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="1">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="50" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+        
+    </Grid>
+</Window>
