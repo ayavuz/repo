@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,17 @@ namespace WpfBonApp
 
         private void menuStart_Click(object sender, RoutedEventArgs e)
         {
+            //test db sqlite
+            SQLiteConnection m_dbConnection;
+
+            m_dbConnection = new SQLiteConnection("Data Source=data/myDB.db;Version=3;");
+            m_dbConnection.Open();
+
+
+            m_dbConnection.Close();
+            //end testdb
+
+
             // add stackpanel with img and text
             Image img = new Image();
             img.Width = 100;

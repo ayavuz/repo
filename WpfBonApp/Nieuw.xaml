@@ -8,24 +8,33 @@
         Title="Nieuw Artikel" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="100px"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Image x:Name="artImg" HorizontalAlignment="Left" Height="100" Width="150" VerticalAlignment="Top"/>
-
-        <StackPanel Grid.Column="1" Orientation="Horizontal">
-            <TextBox Name="txtImgPad" Height="15" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Border BorderThickness="1" Grid.Column="1" BorderBrush="LightGray">
+            <Image x:Name="artImg" Grid.Column="1" HorizontalAlignment="Left" Height="100" Width="150" VerticalAlignment="Top"/>
+        </Border>
+        <StackPanel Grid.Column="3" Orientation="Horizontal">
+            <TextBox Name="txtImgPad" Height="20" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Button Name="btnKiesImg" Content="Kies afbeelding" Height="20" Margin="20 0 0 0" Click="btnKiesImg_Click"/>
         </StackPanel>
+        
+        <TextBlock  Text="Artikelnaam: " Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+        <TextBox Name="artName"  Grid.Column="3" Grid.Row="1" Width="100" Height="20" HorizontalAlignment="Left"/>
+
+        <TextBlock  Text="Categorie: " Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="3" Grid.Row="2" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
     </Grid>
 </Window>
