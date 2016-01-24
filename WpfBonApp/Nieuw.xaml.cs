@@ -46,18 +46,12 @@ namespace WpfBonApp
                 //afbeelding tonen
                 //Image img = new Image();
                 //img.Width = 100;
-                //img.Source = new BitmapImage(new Uri(@"/img/img1.png", UriKind.Relative));
-                //artImg = img;
+                //artImg.Source = new BitmapImage(new Uri(@"/img/img1.png", UriKind.Relative));
+                //artImg.Source = new BitmapImage(new Uri(filename, UriKind.Relative));
+                //artImg.Height = 250;
+                //artImg.Width = 250;
+                artImg.Source = new BitmapImage(new Uri(filename));
 
-                //Image i = new Image();
-                //BitmapImage src = new BitmapImage();
-                //src.BeginInit();
-                //src.UriSource = new Uri(filename, UriKind.Relative);
-                //src.EndInit();
-                //i.Source = src;
-                //i.Stretch = Stretch.Uniform;
-                ////int q = src.PixelHeight;        // Image loads here
-                //artImg = i;
             }
         }
     }
