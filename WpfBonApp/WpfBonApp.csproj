@@ -46,6 +46,9 @@
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SQLite.Designer">
+      <HintPath>..\..\..\..\Program Files (x86)\System.Data.SQLite\2015\bin\SQLite.Designer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -61,6 +64,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files (x86)\System.Data.SQLite\2015\GAC\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -97,6 +102,33 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Artikel.cs">
+      <DependentUpon>ModelBon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ArtikelBon.cs">
+      <DependentUpon>ModelBon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Bon.cs">
+      <DependentUpon>ModelBon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Gebruiker.cs">
+      <DependentUpon>ModelBon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelBon.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBon.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelBon.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBon.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelBon.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBon.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Nieuw.xaml.cs">
       <DependentUpon>Nieuw.xaml</DependentUpon>
     </Compile>
@@ -113,6 +145,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Model\ModelBon.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelBon.edmx</DependentUpon>
+      <LastGenOutput>ModelBon.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\ModelBon.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelBon.edmx</DependentUpon>
+      <LastGenOutput>ModelBon.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -120,6 +162,13 @@
     <Content Include="data\myDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EntityDeploy Include="Model\ModelBon.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelBon.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\ModelBon.edmx.diagram">
+      <DependentUpon>ModelBon.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -133,9 +182,7 @@
   <ItemGroup>
     <Resource Include="img\img1.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

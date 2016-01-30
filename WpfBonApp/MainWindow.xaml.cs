@@ -29,16 +29,16 @@ namespace WpfBonApp
         private void menuStart_Click(object sender, RoutedEventArgs e)
         {
             //test db sqlite
-            SQLiteConnection m_dbConnection;
-            m_dbConnection = new SQLiteConnection("Data Source=data/myDB.db;Version=3;");
-            m_dbConnection.Open();
+            ////SQLiteConnection m_dbConnection;
+            ////m_dbConnection = new SQLiteConnection("Data Source=data/myDB.db;Version=3;");
+            ////m_dbConnection.Open();
 
             //string sql = "SELECT * FROM Customers";
             //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             //SQLiteDataReader reader = command.ExecuteReader();
             //while (reader.Read())
             //    Console.WriteLine(reader["CompanyName"] + "\t" + reader["ContactName"] + "\t" + reader["Address"]);
-            m_dbConnection.Close();
+            ////m_dbConnection.Close();
             //end testdb
 
 
@@ -69,8 +69,21 @@ namespace WpfBonApp
 
         private void menuNieuw_Click(object sender, RoutedEventArgs e)
         {
-            Nieuw nieuwWindow = new Nieuw();
-            nieuwWindow.ShowDialog();
+            //TEST EF
+            Model.myDBEntities myDB = new Model.myDBEntities();
+            Model.Artikel newArtikel = new Model.Artikel();
+            //newArtikel.ID = 1;
+            newArtikel.Omschrijving = "Overhemd2";
+            newArtikel.Categorie = "HemdCategorie2";
+            newArtikel.Prijs = (long)2.73;
+
+            myDB.Artikels.Add(newArtikel);
+            myDB.SaveChanges();
+            //END TEST
+
+            //tijdelijk gecommentarieerd
+            //Nieuw nieuwWindow = new Nieuw();
+            //nieuwWindow.ShowDialog();
         }
     }
 }

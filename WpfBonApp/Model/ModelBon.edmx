@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="myDBModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;C:\Visual Studio 2015\Projects\WpfBonApp\WpfBonApp\data\myDB.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artikel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Omschrijving" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Afbeelding" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Categorie" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Prijs" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArtikelBon">
+          <Key>
+            <PropertyRef Name="ArtikelID" />
+            <PropertyRef Name="BonID" />
+          </Key>
+          <Property Name="ArtikelID" Type="integer" Nullable="false" />
+          <Property Name="BonID" Type="integer" Nullable="false" />
+          <Property Name="Aantal" Type="integer" />
+        </EntityType>
+        <EntityType Name="Bon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BonDT" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="OphalenDT" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="KlantNaam" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="KlantAdres" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="KlantNummer" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="BetaaldDT" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="Gebruiker">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Gebruikersnaam" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Wachtwoord" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Admin" Type="integer" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ArtikelBon_0_0">
+          <End Role="Bon" Type="Self.Bon" Multiplicity="1" />
+          <End Role="ArtikelBon" Type="Self.ArtikelBon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bon">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArtikelBon">
+              <PropertyRef Name="BonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtikelBon_1_0">
+          <End Role="Artikel" Type="Self.Artikel" Multiplicity="1" />
+          <End Role="ArtikelBon" Type="Self.ArtikelBon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArtikelBon">
+              <PropertyRef Name="ArtikelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="myDBModelStoreContainer">
+          <EntitySet Name="Artikel" EntityType="Self.Artikel" store:Type="Tables" />
+          <EntitySet Name="ArtikelBon" EntityType="Self.ArtikelBon" store:Type="Tables" />
+          <EntitySet Name="Bon" EntityType="Self.Bon" store:Type="Tables" />
+          <EntitySet Name="Gebruiker" EntityType="Self.Gebruiker" store:Type="Tables" />
+          <AssociationSet Name="FK_ArtikelBon_0_0" Association="Self.FK_ArtikelBon_0_0">
+            <End Role="Bon" EntitySet="Bon" />
+            <End Role="ArtikelBon" EntitySet="ArtikelBon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtikelBon_1_0" Association="Self.FK_ArtikelBon_1_0">
+            <End Role="Artikel" EntitySet="Artikel" />
+            <End Role="ArtikelBon" EntitySet="ArtikelBon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="myDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artikel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Omschrijving" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Afbeelding" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Categorie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Prijs" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ArtikelBons" Relationship="Self.FK_ArtikelBon_1_0" FromRole="Artikel" ToRole="ArtikelBon" />
+        </EntityType>
+        <EntityType Name="ArtikelBon">
+          <Key>
+            <PropertyRef Name="ArtikelID" />
+            <PropertyRef Name="BonID" />
+          </Key>
+          <Property Name="ArtikelID" Type="Int64" Nullable="false" />
+          <Property Name="BonID" Type="Int64" Nullable="false" />
+          <Property Name="Aantal" Type="Int64" />
+          <NavigationProperty Name="Artikel" Relationship="Self.FK_ArtikelBon_1_0" FromRole="ArtikelBon" ToRole="Artikel" />
+          <NavigationProperty Name="Bon" Relationship="Self.FK_ArtikelBon_0_0" FromRole="ArtikelBon" ToRole="Bon" />
+        </EntityType>
+        <EntityType Name="Bon">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BonDT" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OphalenDT" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KlantNaam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KlantAdres" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="KlantNummer" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="BetaaldDT" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ArtikelBons" Relationship="Self.FK_ArtikelBon_0_0" FromRole="Bon" ToRole="ArtikelBon" />
+        </EntityType>
+        <EntityType Name="Gebruiker">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Gebruikersnaam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Wachtwoord" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Admin" Type="Int64" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ArtikelBon_1_0">
+          <End Role="Artikel" Type="Self.Artikel" Multiplicity="1" />
+          <End Role="ArtikelBon" Type="Self.ArtikelBon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artikel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArtikelBon">
+              <PropertyRef Name="ArtikelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtikelBon_0_0">
+          <End Role="Bon" Type="Self.Bon" Multiplicity="1" />
+          <End Role="ArtikelBon" Type="Self.ArtikelBon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bon">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ArtikelBon">
+              <PropertyRef Name="BonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="myDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artikels" EntityType="Self.Artikel" />
+          <EntitySet Name="ArtikelBons" EntityType="Self.ArtikelBon" />
+          <EntitySet Name="Bons" EntityType="Self.Bon" />
+          <EntitySet Name="Gebruikers" EntityType="Self.Gebruiker" />
+          <AssociationSet Name="FK_ArtikelBon_1_0" Association="Self.FK_ArtikelBon_1_0">
+            <End Role="Artikel" EntitySet="Artikels" />
+            <End Role="ArtikelBon" EntitySet="ArtikelBons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtikelBon_0_0" Association="Self.FK_ArtikelBon_0_0">
+            <End Role="Bon" EntitySet="Bons" />
+            <End Role="ArtikelBon" EntitySet="ArtikelBons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="myDBModelStoreContainer" CdmEntityContainer="myDBEntities">
+          <EntitySetMapping Name="Artikels">
+            <EntityTypeMapping TypeName="myDBModel.Artikel">
+              <MappingFragment StoreEntitySet="Artikel">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Omschrijving" ColumnName="Omschrijving" />
+                <ScalarProperty Name="Afbeelding" ColumnName="Afbeelding" />
+                <ScalarProperty Name="Categorie" ColumnName="Categorie" />
+                <ScalarProperty Name="Prijs" ColumnName="Prijs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtikelBons">
+            <EntityTypeMapping TypeName="myDBModel.ArtikelBon">
+              <MappingFragment StoreEntitySet="ArtikelBon">
+                <ScalarProperty Name="ArtikelID" ColumnName="ArtikelID" />
+                <ScalarProperty Name="BonID" ColumnName="BonID" />
+                <ScalarProperty Name="Aantal" ColumnName="Aantal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bons">
+            <EntityTypeMapping TypeName="myDBModel.Bon">
+              <MappingFragment StoreEntitySet="Bon">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BonDT" ColumnName="BonDT" />
+                <ScalarProperty Name="OphalenDT" ColumnName="OphalenDT" />
+                <ScalarProperty Name="KlantNaam" ColumnName="KlantNaam" />
+                <ScalarProperty Name="KlantAdres" ColumnName="KlantAdres" />
+                <ScalarProperty Name="KlantNummer" ColumnName="KlantNummer" />
+                <ScalarProperty Name="BetaaldDT" ColumnName="BetaaldDT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gebruikers">
+            <EntityTypeMapping TypeName="myDBModel.Gebruiker">
+              <MappingFragment StoreEntitySet="Gebruiker">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Gebruikersnaam" ColumnName="Gebruikersnaam" />
+                <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
