@@ -54,5 +54,32 @@ namespace WpfBonApp
 
             }
         }
+
+        private void btnOpslaanNieuw_Click(object sender, RoutedEventArgs e)
+        {
+            //string imgPad = txtImgPad.Text;
+            //string omschrijving = txtOmschrijving.Text;
+            //prijs omzetten naar euro en centen
+            char[] delimiters = new char[] { ',', '.' };
+            string[] parts = txtPrijs.Text.Split(delimiters,
+                             StringSplitOptions.RemoveEmptyEntries);
+            //checken als er maar 1 item in parts is alleen euro vullen en centen vullen met 00
+
+            //string categorie = cmbCategorie.SelectedValue.ToString();
+
+
+            ////TEST EF
+            //Model.myDBEntities myDB = new Model.myDBEntities();
+            //Model.Artikel newArtikel = new Model.Artikel();
+            ////newArtikel.ID = 1;
+            //newArtikel.Omschrijving = "Overhemd2";
+            //newArtikel.Categorie = "HemdCategorie2";
+            //newArtikel.PrijsEuro = 2;
+            //newArtikel.PrijsCent = 30;
+
+            //myDB.Artikels.Add(newArtikel);
+            //myDB.SaveChanges();
+            ////END TEST
+        }
     }
 }

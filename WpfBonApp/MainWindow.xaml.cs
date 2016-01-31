@@ -44,8 +44,8 @@ namespace WpfBonApp
 
             // add stackpanel with img and text
             Image img = new Image();
-            img.Width = 100;
-            img.Source = new BitmapImage(new Uri(@"/img/img1.png", UriKind.Relative));
+            img.Width = 150;
+            img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
 
             TextBlock txtBlock = new TextBlock();
             txtBlock.Text = "Product " + listboxProducten.Items.Count;
@@ -69,23 +69,9 @@ namespace WpfBonApp
 
         private void menuNieuw_Click(object sender, RoutedEventArgs e)
         {
-            //TEST EF
-            Model.myDBEntities myDB = new Model.myDBEntities();
-            Model.Artikel newArtikel = new Model.Artikel();
-            //newArtikel.ID = 1;
-            newArtikel.Omschrijving = "Overhemd2";
-            newArtikel.Categorie = "HemdCategorie2";
-            newArtikel.PrijsEuro = 2;
-            newArtikel.PrijsCent = 30;
-            //newArtikel.Prijs = (long)2.73;
-
-            myDB.Artikels.Add(newArtikel);
-            myDB.SaveChanges();
-            //END TEST
-
             //tijdelijk gecommentarieerd
-            //Nieuw nieuwWindow = new Nieuw();
-            //nieuwWindow.ShowDialog();
+            Nieuw nieuwWindow = new Nieuw();
+            nieuwWindow.ShowDialog();
         }
     }
 }
