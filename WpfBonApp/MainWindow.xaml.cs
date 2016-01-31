@@ -75,7 +75,9 @@ namespace WpfBonApp
             //newArtikel.ID = 1;
             newArtikel.Omschrijving = "Overhemd2";
             newArtikel.Categorie = "HemdCategorie2";
-            newArtikel.Prijs = (long)2.73;
+            newArtikel.PrijsEuro = 2;
+            newArtikel.PrijsCent = 30;
+            //newArtikel.Prijs = (long)2.73;
 
             myDB.Artikels.Add(newArtikel);
             myDB.SaveChanges();
