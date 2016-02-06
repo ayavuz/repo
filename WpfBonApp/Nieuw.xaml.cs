@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfBonApp.Model;
 
 namespace WpfBonApp
 {
@@ -28,18 +29,13 @@ namespace WpfBonApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //model db entities laden
             myDB = new Model.myDBEntities();
 
-            //MessageBox.Show("Loaded");
-
-
-            //categorien vullen
-            var catList = from cat in myDB.Categories
-                          orderby cat.CategorieNaam
-                          select new { Name = cat.CategorieNaam, ID = cat.ID };
-
-            cmbCategorie.ItemsSource = catList.ToList();
+            VulCmbCategorieen();
         }
+
+        
 
         private void btnKiesImg_Click(object sender, RoutedEventArgs e)
         {
@@ -81,21 +77,19 @@ namespace WpfBonApp
             //checken als er maar 1 item in parts is alleen euro vullen en centen vullen met 00
             int euro = 0;
             int centen = 00;
-            if(parts.Length == 1)
+            switch (parts.Length)
             {
-                euro = Convert.ToInt16(parts[0]);
-            }
-            else if(parts.Length == 2)
-            {
-                euro = Convert.ToInt16(parts[0]);
-                centen = Convert.ToInt16(parts[1]);
+                case 1:
+                    euro = Convert.ToInt16(parts[0]);
+                    break;
+                case 2:
+                    euro = Convert.ToInt16(parts[0]);
+                    centen = Convert.ToInt16(parts[1]);
+                    break;
             }
 
             //string categorie = cmbCategorie.SelectedValue.ToString();
             //
-            return;
-
-
             
             ////TEST EF
             //Model.myDBEntities myDB = new Model.myDBEntities();
@@ -147,6 +141,40 @@ namespace WpfBonApp
             artImg.Source = null;
         }
 
-        
+        private void VulCmbCategorieen()
+        {
+            //categorieen vullen
+            var catList = from cat in myDB.Categories
+                          orderby cat.CategorieNaam
+                          select new { Name = cat.CategorieNaam, ID = cat.ID };
+
+            cmbCategorie.ItemsSource = catList.ToList();
+        }
+
+        private void btnShowNieuweCat_Click(object sender, RoutedEventArgs e)
+        {
+            //nieuwe categorie controls tonen
+            tblockNewCat.Visibility = Visibility.Visible;
+            txtNieuweCat.Visibility = Visibility.Visible;
+            btnSaveNieuweCat.Visibility = Visibility.Visible;
+        }
+
+        private void btnSaveNieuweCat_Click(object sender, RoutedEventArgs e)
+        {
+            //nieuwe categorie opslaan
+            Model.Categorie newCat = new Categorie();
+            newCat.CategorieNaam = txtNieuweCat.Text;
+
+            myDB.Categories.Add(newCat);
+            myDB.SaveChanges();
+
+            VulCmbCategorieen();
+
+            //controls resetten
+            txtNieuweCat.Text = "";
+            tblockNewCat.Visibility = Visibility.Hidden;
+            txtNieuweCat.Visibility = Visibility.Hidden;
+            btnSaveNieuweCat.Visibility = Visibility.Hidden;
+        }
     }
 }

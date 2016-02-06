@@ -19,6 +19,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -38,7 +39,12 @@
 
         <TextBlock  Text="Categorie: " Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"/>
         <ComboBox Name="cmbCategorie" Grid.Column="3" Grid.Row="3" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="ID"/>
+        <Button Name="btnShowNieuweCat" Grid.Column="3" Grid.Row="3" Content="Nieuwe Categorie" Height="20" Width="120" Margin="150 0 0 0" Click="btnShowNieuweCat_Click"/>
 
-        <Button Name="btnOpslaanNieuw" Height="20" Width="100" Grid.Column="3" Grid.Row="4" Content="Opslaan" HorizontalAlignment="Left" Click="btnOpslaanNieuw_Click"/>
+        <TextBlock Visibility="Hidden" Name="tblockNewCat" Text="Naam nieuwe Categorie: " Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+        <TextBox Visibility="Hidden" Name="txtNieuweCat"  Grid.Column="3" Grid.Row="4" Width="150" Height="20" HorizontalAlignment="Left"/>
+        <Button Visibility="Hidden" Name="btnSaveNieuweCat" Grid.Column="3" Grid.Row="4" Content="Categorie Opslaan" Height="20" Width="120" Margin="150 0 0 0" Click="btnSaveNieuweCat_Click"/>
+        
+        <Button Name="btnOpslaanNieuw" Height="20" Width="100" Grid.Column="3" Grid.Row="5" Content="Opslaan" HorizontalAlignment="Left" Click="btnOpslaanNieuw_Click"/>
     </Grid>
 </Window>
