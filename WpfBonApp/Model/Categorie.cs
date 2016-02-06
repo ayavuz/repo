@@ -12,23 +12,18 @@ namespace WpfBonApp.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Artikel
+    public partial class Categorie
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Artikel()
+        public Categorie()
         {
-            this.ArtikelBons = new HashSet<ArtikelBon>();
+            this.Artikels = new HashSet<Artikel>();
         }
     
         public long ID { get; set; }
-        public string Omschrijving { get; set; }
-        public string Afbeelding { get; set; }
-        public long Categorie { get; set; }
-        public long PrijsEuro { get; set; }
-        public long PrijsCent { get; set; }
+        public string CategorieNaam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ArtikelBon> ArtikelBons { get; set; }
-        public virtual Categorie Categorie1 { get; set; }
+        public virtual ICollection<Artikel> Artikels { get; set; }
     }
 }

@@ -4,13 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a947030321a4477ea2d8b2782b18ec1b" Name="Diagram1">
+      <Diagram DiagramId="a947030321a4477ea2d8b2782b18ec1b" Name="Diagram1" ZoomLevel="89">
         <EntityTypeShape EntityType="myDBModel.Artikel" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.ArtikelBon" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.Bon" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="myDBModel.Gebruiker" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <AssociationConnector Association="myDBModel.FK_ArtikelBon_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="myDBModel.FK_ArtikelBon_0_0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="myDBModel.Categorie" Width="1.5" PointX="0.75" PointY="9.375" />
+        <AssociationConnector Association="myDBModel.FK_Artikel_0_0" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

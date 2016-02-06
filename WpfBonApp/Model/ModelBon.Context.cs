@@ -29,5 +29,6 @@ namespace WpfBonApp.Model
         public virtual DbSet<ArtikelBon> ArtikelBons { get; set; }
         public virtual DbSet<Bon> Bons { get; set; }
         public virtual DbSet<Gebruiker> Gebruikers { get; set; }
+        public virtual DbSet<Categorie> Categories { get; set; }
     }
 }

@@ -12,7 +12,7 @@
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Omschrijving" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Afbeelding" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="Categorie" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Categorie" Type="integer" />
           <Property Name="PrijsEuro" Type="integer" Nullable="false" />
           <Property Name="PrijsCent" Type="integer" Nullable="false" />
         </EntityType>
@@ -37,6 +37,13 @@
           <Property Name="KlantNummer" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="BetaaldDT" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategorieNaam" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
         <EntityType Name="Gebruiker">
           <Key>
             <PropertyRef Name="ID" />
@@ -46,6 +53,18 @@
           <Property Name="Wachtwoord" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
           <Property Name="Admin" Type="integer" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Artikel_0_0">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Artikel" Type="Self.Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Artikel">
+              <PropertyRef Name="Categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ArtikelBon_0_0">
           <End Role="Bon" Type="Self.Bon" Multiplicity="1" />
           <End Role="ArtikelBon" Type="Self.ArtikelBon" Multiplicity="*" />
@@ -74,7 +93,12 @@
           <EntitySet Name="Artikel" EntityType="Self.Artikel" store:Type="Tables" />
           <EntitySet Name="ArtikelBon" EntityType="Self.ArtikelBon" store:Type="Tables" />
           <EntitySet Name="Bon" EntityType="Self.Bon" store:Type="Tables" />
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" store:Type="Tables" />
           <EntitySet Name="Gebruiker" EntityType="Self.Gebruiker" store:Type="Tables" />
+          <AssociationSet Name="FK_Artikel_0_0" Association="Self.FK_Artikel_0_0">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="Artikel" EntitySet="Artikel" />
+          </AssociationSet>
           <AssociationSet Name="FK_ArtikelBon_0_0" Association="Self.FK_ArtikelBon_0_0">
             <End Role="Bon" EntitySet="Bon" />
             <End Role="ArtikelBon" EntitySet="ArtikelBon" />
@@ -95,10 +119,11 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Omschrijving" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Afbeelding" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Categorie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Categorie" Type="Int64" Nullable="false" />
           <NavigationProperty Name="ArtikelBons" Relationship="Self.FK_ArtikelBon_1_0" FromRole="Artikel" ToRole="ArtikelBon" />
           <Property Name="PrijsEuro" Type="Int64" Nullable="false" />
           <Property Name="PrijsCent" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Categorie1" Relationship="myDBModel.FK_Artikel_0_0" FromRole="Artikel" ToRole="Categorie" />
         </EntityType>
         <EntityType Name="ArtikelBon">
           <Key>
@@ -170,7 +195,32 @@
             <End Role="Bon" EntitySet="Bons" />
             <End Role="ArtikelBon" EntitySet="ArtikelBons" />
           </AssociationSet>
+          <EntitySet Name="Categories" EntityType="myDBModel.Categorie" />
+          <AssociationSet Name="FK_Artikel_0_0" Association="myDBModel.FK_Artikel_0_0">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Artikel" EntitySet="Artikels" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategorieNaam" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Artikels" Relationship="myDBModel.FK_Artikel_0_0" FromRole="Categorie" ToRole="Artikel" />
+        </EntityType>
+        <Association Name="FK_Artikel_0_0">
+          <End Type="myDBModel.Categorie" Role="Categorie" Multiplicity="1" />
+          <End Type="myDBModel.Artikel" Role="Artikel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Artikel">
+              <PropertyRef Name="Categorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -218,6 +268,14 @@
                 <ScalarProperty Name="Gebruikersnaam" ColumnName="Gebruikersnaam" />
                 <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
                 <ScalarProperty Name="Admin" ColumnName="Admin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="myDBModel.Categorie">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="CategorieNaam" ColumnName="CategorieNaam" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

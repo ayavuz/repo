@@ -111,6 +111,9 @@
     <Compile Include="Model\Bon.cs">
       <DependentUpon>ModelBon.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Categorie.cs">
+      <DependentUpon>ModelBon.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Gebruiker.cs">
       <DependentUpon>ModelBon.tt</DependentUpon>
     </Compile>
