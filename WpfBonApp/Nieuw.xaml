@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="Nieuw Artikel" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Nieuw Artikel" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -37,7 +37,7 @@
         <TextBox Name="txtPrijs"  Grid.Column="3" Grid.Row="2" Width="100" Height="20" HorizontalAlignment="Left"/>
 
         <TextBlock  Text="Categorie: " Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"/>
-        <ComboBox Name="cmbCategorie" Grid.Column="3" Grid.Row="3" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox Name="cmbCategorie" Grid.Column="3" Grid.Row="3" Width="150" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="ID"/>
 
         <Button Name="btnOpslaanNieuw" Height="20" Width="100" Grid.Column="3" Grid.Row="4" Content="Opslaan" HorizontalAlignment="Left" Click="btnOpslaanNieuw_Click"/>
     </Grid>

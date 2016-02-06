@@ -24,6 +24,23 @@ namespace WpfBonApp
             InitializeComponent();
         }
 
+        private Model.myDBEntities myDB;
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            myDB = new Model.myDBEntities();
+
+            //MessageBox.Show("Loaded");
+
+
+            //categorien vullen
+            var catList = from cat in myDB.Categories
+                          orderby cat.CategorieNaam
+                          select new { Name = cat.CategorieNaam, ID = cat.ID };
+
+            cmbCategorie.ItemsSource = catList.ToList();
+        }
+
         private void btnKiesImg_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
@@ -130,6 +147,6 @@ namespace WpfBonApp
             artImg.Source = null;
         }
 
-
+        
     }
 }
