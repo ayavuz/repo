@@ -43,31 +43,43 @@ namespace WpfBonApp
                 string filename = dlg.FileName;
                 txtImgPad.Text = filename;
 
-                //afbeelding tonen
-                //Image img = new Image();
-                //img.Width = 100;
-                //artImg.Source = new BitmapImage(new Uri(@"/img/img1.png", UriKind.Relative));
-                //artImg.Source = new BitmapImage(new Uri(filename, UriKind.Relative));
-                //artImg.Height = 250;
-                //artImg.Width = 250;
                 artImg.Source = new BitmapImage(new Uri(filename));
-
             }
         }
 
         private void btnOpslaanNieuw_Click(object sender, RoutedEventArgs e)
         {
-            //string imgPad = txtImgPad.Text;
-            //string omschrijving = txtOmschrijving.Text;
+            string imgPad = "";
+            //check of de afbeelding bestaat
+            if(System.IO.File.Exists(txtImgPad.Text))
+            {
+                imgPad = txtImgPad.Text;
+            }
+            
+            string omschrijving = txtOmschrijving.Text;
             //prijs omzetten naar euro en centen
             char[] delimiters = new char[] { ',', '.' };
             string[] parts = txtPrijs.Text.Split(delimiters,
                              StringSplitOptions.RemoveEmptyEntries);
             //checken als er maar 1 item in parts is alleen euro vullen en centen vullen met 00
+            int euro = 0;
+            int centen = 00;
+            if(parts.Length == 1)
+            {
+                euro = Convert.ToInt16(parts[0]);
+            }
+            else if(parts.Length == 2)
+            {
+                euro = Convert.ToInt16(parts[0]);
+                centen = Convert.ToInt16(parts[1]);
+            }
 
             //string categorie = cmbCategorie.SelectedValue.ToString();
+            //
+            return;
 
 
+            
             ////TEST EF
             //Model.myDBEntities myDB = new Model.myDBEntities();
             //Model.Artikel newArtikel = new Model.Artikel();
@@ -80,6 +92,44 @@ namespace WpfBonApp
             //myDB.Artikels.Add(newArtikel);
             //myDB.SaveChanges();
             ////END TEST
+
+            ////////////////////////////////////////////////////////////////////////////////////
+
+            //PRODUCT TOEVOEGEN AAN LISTBOXPRODUCTEN IN MAINDOW
+            //img aanmaken en de source van img opgeven
+            Image img = new Image();
+            img.Width = 150;
+
+            //als afb path niet leeg is dan.. anders default tonen
+            if(string.IsNullOrEmpty(txtImgPad.Text))
+            {
+                img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+            }
+            else
+            {
+                img.Source = artImg.Source;
+            }
+
+            //Omschrijving onder de afbeelding
+            TextBlock txtBlock = new TextBlock();
+            txtBlock.Text = "Product Test";
+            //txtBlock.Text = "Product " + ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Count;
+
+            //afbeelding en omschrijving in een stackpanel zetten
+            StackPanel stkpnl = new StackPanel();
+            stkpnl.Children.Add(img);
+            stkpnl.Children.Add(txtBlock);
+
+            //stackpanel aan de listbox toevoegen
+            ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
+
+            //de texboxen enz resetten
+            txtImgPad.Text = "";
+            txtOmschrijving.Text = "";
+            txtPrijs.Text = "";
+            artImg.Source = null;
         }
+
+
     }
 }
