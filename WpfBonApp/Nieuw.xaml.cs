@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,6 +63,14 @@ namespace WpfBonApp
 
         private void btnOpslaanNieuw_Click(object sender, RoutedEventArgs e)
         {
+            //FUNCTIE VOOR VALIDATION // check of er tekst in textbox euro is ingevoerd buiten toegestane.
+            if (!IsPriceValid())
+            {
+                MessageBox.Show("Prijs verkeerd ingevoerd. \nAlleen nummers, punt en komma toegestaan.");
+                return;
+            }
+
+
             string imgPad = "";
             //check of de afbeelding bestaat
             if(System.IO.File.Exists(txtImgPad.Text))
@@ -115,7 +124,7 @@ namespace WpfBonApp
             if (!artikelBestaat)
             {
                 MessageBox.Show(
-                    "Er is iets misgegaan bij het toevoegen van de artikel. \n Controleer de gegevens en probeer het opnieuw.");
+                    "Er is iets misgegaan bij het toevoegen van de artikel. \nControleer de gegevens en probeer het opnieuw.");
                 return;
             }
             
@@ -135,10 +144,13 @@ namespace WpfBonApp
                 img.Source = new BitmapImage(new Uri(newArtikel.Afbeelding));
             }
 
-            //Omschrijving onder de afbeelding
+            //Gegevens onder de afbeelding
             TextBlock txtBlock = new TextBlock();
-            txtBlock.Text = "Product Test";
-            //txtBlock.Text = "Product " + ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Count;
+            txtBlock.FontSize = 14;
+            txtBlock.Text = newArtikel.Omschrijving;
+            //categorie OOK TONEN?????
+            //prijs
+            txtBlock.Text += Environment.NewLine + "\u20AC " + newArtikel.PrijsEuro + "," + newArtikel.PrijsCent;
 
             //afbeelding en omschrijving in een stackpanel zetten
             StackPanel stkpnl = new StackPanel();
@@ -153,6 +165,14 @@ namespace WpfBonApp
             txtOmschrijving.Text = "";
             txtPrijs.Text = "";
             artImg.Source = null;
+        }
+
+        private bool IsPriceValid()
+        {
+            Regex regex = new Regex(@"^\d+(?:[\.\,]\d+)?$");
+            Match match = regex.Match(txtPrijs.Text);
+
+            return match.Success;
         }
 
         private void VulCmbCategorieen()

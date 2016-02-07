@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Grid>
         
         
@@ -22,7 +22,7 @@
         
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem x:Name="menuStart" Height="40"  Header="Start" Click="menuStart_Click"/>
-            <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw" Click="menuNieuw_Click"/>
+            <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw artikel" Click="menuNieuw_Click"/>
         </Menu>
 
         <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public">
