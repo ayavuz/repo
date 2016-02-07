@@ -88,37 +88,51 @@ namespace WpfBonApp
                     break;
             }
 
-            //string categorie = cmbCategorie.SelectedValue.ToString();
-            //
             
-            ////TEST EF
-            //Model.myDBEntities myDB = new Model.myDBEntities();
-            //Model.Artikel newArtikel = new Model.Artikel();
-            ////newArtikel.ID = 1;
-            //newArtikel.Omschrijving = "Overhemd2";
-            //newArtikel.Categorie = "HemdCategorie2";
-            //newArtikel.PrijsEuro = 2;
-            //newArtikel.PrijsCent = 30;
+            ///////
+            
+            //Artiken aanmaken, vullen en aan database toevoegen
+            Model.Artikel newArtikel = new Model.Artikel();
+            newArtikel.Afbeelding = imgPad;
+            newArtikel.Omschrijving = omschrijving;
+            newArtikel.PrijsEuro = euro;
+            newArtikel.PrijsCent = centen;
+            //als er een categorie geselecteerd is
+            if (cmbCategorie.SelectedIndex != -1)
+            {
+                newArtikel.Categorie = Convert.ToInt16(cmbCategorie.SelectedValue);
+            }
 
-            //myDB.Artikels.Add(newArtikel);
-            //myDB.SaveChanges();
-            ////END TEST
+            //de nieuwe artikel toevoegen aan de database
+            myDB.Artikels.Add(newArtikel);
+            myDB.SaveChanges();
 
-            ////////////////////////////////////////////////////////////////////////////////////
+            //de id van de laatst toegevoegde artikel ophalen
+            var lastId = newArtikel.ID;
+            bool artikelBestaat = myDB.Artikels.Any(art => art.ID.Equals(lastId));
 
+            //als artikel niet aan db is toegevoegd dan foutmelding tonen en terug
+            if (!artikelBestaat)
+            {
+                MessageBox.Show(
+                    "Er is iets misgegaan bij het toevoegen van de artikel. \n Controleer de gegevens en probeer het opnieuw.");
+                return;
+            }
+            
             //PRODUCT TOEVOEGEN AAN LISTBOXPRODUCTEN IN MAINDOW
             //img aanmaken en de source van img opgeven
             Image img = new Image();
             img.Width = 150;
 
             //als afb path niet leeg is dan.. anders default tonen
-            if(string.IsNullOrEmpty(txtImgPad.Text))
+            if(string.IsNullOrEmpty(newArtikel.Afbeelding))
             {
                 img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
             }
             else
             {
-                img.Source = artImg.Source;
+                //img.Source = artImg.Source;
+                img.Source = new BitmapImage(new Uri(newArtikel.Afbeelding));
             }
 
             //Omschrijving onder de afbeelding
@@ -172,9 +186,11 @@ namespace WpfBonApp
 
             //controls resetten
             txtNieuweCat.Text = "";
+            cmbCategorie.SelectedIndex = -1;
             tblockNewCat.Visibility = Visibility.Hidden;
             txtNieuweCat.Visibility = Visibility.Hidden;
             btnSaveNieuweCat.Visibility = Visibility.Hidden;
         }
+
     }
 }
