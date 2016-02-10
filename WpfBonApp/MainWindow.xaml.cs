@@ -79,8 +79,7 @@ namespace WpfBonApp
 
                 
 
-                //De product aan het mandje toevoegen
-                //listBoxMandje.Items.Add(txtBlock.Text);
+                
             }
         }
 
@@ -137,7 +136,17 @@ namespace WpfBonApp
                         MessageBox.Show("Artikel ID ontbreekt. Sluit de applicatie en probeer het opnieuw.");
                         return;
                     }
+                   
+                    TextBlock artTextblock = stkpnlContent.Children[1] as TextBlock;
                     
+                    TextBlock artTextblockNew = new TextBlock();
+                    artTextblockNew.Text = artTextblock.Text;
+                    artTextblockNew.Tag = artikelID;
+
+                    //TODO Toevoegen aan mandje/BON + als je op een artikel klikt die verwijderen uit mandje
+
+                    //De product aan het mandje toevoegen
+                    listBoxMandje.Items.Add(artTextblockNew);                
                 }
                 catch (Exception ex)
                 {
