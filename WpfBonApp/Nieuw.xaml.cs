@@ -124,7 +124,7 @@ namespace WpfBonApp
             if (!artikelBestaat)
             {
                 MessageBox.Show(
-                    "Er is iets misgegaan bij het toevoegen van de artikel. \nControleer de gegevens en probeer het opnieuw.");
+                    "Er is iets misgegaan bij het toevoegen van het artikel. \nControleer de gegevens en probeer het opnieuw.");
                 return;
             }
             
@@ -156,6 +156,9 @@ namespace WpfBonApp
             StackPanel stkpnl = new StackPanel();
             stkpnl.Children.Add(img);
             stkpnl.Children.Add(txtBlock);
+
+            //een id meegeven(van de artikel)
+            stkpnl.Tag = newArtikel.ID;
 
             //stackpanel aan de listbox toevoegen
             ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);

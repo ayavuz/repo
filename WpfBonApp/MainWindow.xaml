@@ -25,7 +25,7 @@
             <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw artikel" Click="menuNieuw_Click"/>
         </Menu>
 
-        <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public">
+        <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public" PreviewMouseDown="listboxProducten_PreviewMouseDown">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="5"/>

@@ -71,8 +71,13 @@ namespace WpfBonApp
                 stkpnl.Children.Add(img);
                 stkpnl.Children.Add(txtBlock);
 
+                //een id meegeven(van de artikel)
+                stkpnl.Tag = artikel.ID;
+
                 //stackpanel aan de listbox toevoegen
                 listboxProducten.Items.Add(stkpnl);
+
+                
 
                 //De product aan het mandje toevoegen
                 //listBoxMandje.Items.Add(txtBlock.Text);
@@ -111,6 +116,35 @@ namespace WpfBonApp
             nieuwWindow.ShowDialog();
         }
 
-        
+        //listbox click event checken of het listbox item is
+        private void listboxProducten_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var item =
+                ItemsControl.ContainerFromElement(listboxProducten, e.OriginalSource as DependencyObject) as ListBoxItem;
+
+            if (item != null)
+            {
+                try
+                {
+                    int artikelID;
+                    var stkpnlContent = item.Content as StackPanel;
+                    if (stkpnlContent != null && stkpnlContent.Tag != null)
+                    {
+                        artikelID = Convert.ToInt16(stkpnlContent.Tag);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Artikel ID ontbreekt. Sluit de applicatie en probeer het opnieuw.");
+                        return;
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Er is iets misgegaan bij het selecteren van het artikel. \n" + ex.Message);
+                }
+                
+            }
+        }
     }
 }
