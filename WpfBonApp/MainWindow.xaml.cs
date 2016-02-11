@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfBonApp.Model;
 
 namespace WpfBonApp
 {
@@ -177,29 +178,37 @@ namespace WpfBonApp
 
         private void btnMaakBon_Click(object sender, RoutedEventArgs e)
         {
-            if (listBoxMandje.Items.Count != 0)
-            {
-                //alle artikels van listboxmandje ophalen   //ID - AANTAL
-                var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
-                    group art.Tag by art.Tag
-                    into grp
-                    let count = grp.Count()
-                    orderby count descending
-                    select new {ID = grp.Key, Count = count};
+            Bon newBon = new Bon();
+            newBon.ShowDialog();
+
+            //TIJDELIJK COMMENT
+            //if (listBoxMandje.Items.Count != 0)
+            //{
+            //    //gegevens klant vragen
 
 
-                //foreach (TextBlock tblkArtikel in listBoxMandje.Items)
-                //{
-                //    string artikelID = tblkArtikel.Tag.ToString();
-                //}
-            }
-            else
-            {
-                MessageBox.Show("Geen artikel toegevoegd aan het mandje.");
-            }
-            
 
-            //alle unieke IDs van artikels MET AANTAL!
+            //    //alle artikels van listboxmandje ophalen   //ID - AANTAL
+            //    var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
+            //        group art.Tag by art.Tag
+            //        into grp
+            //        let count = grp.Count()
+            //        orderby count descending
+            //        select new {ID = grp.Key, Count = count};
+
+
+            //    //bon aanmaken
+            //    //Model.Bon newBon = new Bon();
+            //    //newBon.
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Geen artikel toegevoegd aan het mandje.");
+            //}
+
+
+            ////alle unieke IDs van artikels MET AANTAL!
         }
     }
 }
