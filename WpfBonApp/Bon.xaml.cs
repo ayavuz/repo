@@ -25,5 +25,28 @@ namespace WpfBonApp
         {
             InitializeComponent();
         }
+
+        private void btnBon_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO de functie testen
+            if (FieldsAreFilled())
+            {
+                
+            }
+            //
+        }
+
+        private bool FieldsAreFilled()
+        {
+            if (!string.IsNullOrEmpty(txtNaam.Text) && !string.IsNullOrEmpty(txtAdres.Text) &&
+                !string.IsNullOrEmpty(txtTelNr.Text) && (dtpOphalen.Value != null))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
