@@ -175,5 +175,31 @@ namespace WpfBonApp
             }
         }
 
+        private void btnMaakBon_Click(object sender, RoutedEventArgs e)
+        {
+            if (listBoxMandje.Items.Count != 0)
+            {
+                //alle artikels van listboxmandje ophalen   //ID - AANTAL
+                var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
+                    group art.Tag by art.Tag
+                    into grp
+                    let count = grp.Count()
+                    orderby count descending
+                    select new {ID = grp.Key, Count = count};
+
+
+                //foreach (TextBlock tblkArtikel in listBoxMandje.Items)
+                //{
+                //    string artikelID = tblkArtikel.Tag.ToString();
+                //}
+            }
+            else
+            {
+                MessageBox.Show("Geen artikel toegevoegd aan het mandje.");
+            }
+            
+
+            //alle unieke IDs van artikels MET AANTAL!
+        }
     }
 }

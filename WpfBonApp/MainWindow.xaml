@@ -18,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
@@ -47,8 +48,9 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
         </ListBox>
+        
+        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="1" Content="Maak Bon" Height="25" Width="100" VerticalAlignment="Center" Click="btnMaakBon_Click" />
         
     </Grid>
 </Window>
