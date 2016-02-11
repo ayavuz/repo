@@ -28,6 +28,9 @@ namespace WpfBonApp
 
         private Model.myDBEntities myDB;
 
+        //alle artikels
+        private List<Model.Artikel> listAlleArtikels;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             myDB = new Model.myDBEntities();
@@ -41,7 +44,7 @@ namespace WpfBonApp
             var allArt = from art in myDB.Artikels
                 select art;
 
-            List<Model.Artikel> listAlleArtikels = allArt.ToList();
+            listAlleArtikels = allArt.ToList();
 
             //alle artikels loopen en toevoegen aan productenlijst
             foreach (Model.Artikel artikel in listAlleArtikels)
@@ -76,35 +79,13 @@ namespace WpfBonApp
 
                 //stackpanel aan de listbox toevoegen
                 listboxProducten.Items.Add(stkpnl);
-
-                
-
-                
+          
             }
         }
 
         private void menuStart_Click(object sender, RoutedEventArgs e)
         {
-            ////img aanmaken en de source van img opgeven
-            //Image img = new Image();
-            //img.Width = 150;
-            //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
-
-            ////Omschrijving onder de afbeelding
-            //TextBlock txtBlock = new TextBlock();
-            //txtBlock.Text = "Product " + listboxProducten.Items.Count;
-
-            ////afbeelding en omschrijving in een stackpanel zetten
-            //StackPanel stkpnl = new StackPanel();
-            //stkpnl.Children.Add(img);
-            //stkpnl.Children.Add(txtBlock);
-
-            ////stackpanel aan de listbox toevoegen
-            //listboxProducten.Items.Add(stkpnl);
-
-            ////De product aan het mandje toevoegen
-            //listBoxMandje.Items.Add(txtBlock.Text);
-
+   
             
         }
 
@@ -140,10 +121,12 @@ namespace WpfBonApp
                     TextBlock artTextblock = stkpnlContent.Children[1] as TextBlock;
                     
                     TextBlock artTextblockNew = new TextBlock();
-                    artTextblockNew.Text = artTextblock.Text;
+
+                    artTextblockNew.Text = artTextblock?.Text;
                     artTextblockNew.Tag = artikelID;
 
                     //TODO Toevoegen aan mandje/BON + als je op een artikel klikt die verwijderen uit mandje
+                    //list aan een mandje lijst toevoegen + check of het er al in zit.
 
                     //De product aan het mandje toevoegen
                     listBoxMandje.Items.Add(artTextblockNew);                
@@ -155,5 +138,42 @@ namespace WpfBonApp
                 
             }
         }
+
+        private void listBoxMandje_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var item =
+                ItemsControl.ContainerFromElement(listBoxMandje, e.OriginalSource as DependencyObject) as ListBoxItem;
+
+            if (item != null)
+            {
+                //id ophalen van het artikel (listboxitem)
+                int artikelID;
+                try
+                {
+                    var itemContent = item.Content as TextBlock;
+                    if (itemContent != null && itemContent.Tag != null)
+                    {
+                        artikelID = Convert.ToInt16(itemContent.Tag);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Fout bij het selecteren van het artikel.");
+                        return;
+                    }
+
+                    //TODO het artikel van de lijst en listbox verwijderen 
+                    listBoxMandje.Items.Remove(itemContent);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Fout bij het verwijderen van het artikel. \n" + ex.Message);
+                    return;       
+                }
+
+
+            }
+        }
+
     }
 }

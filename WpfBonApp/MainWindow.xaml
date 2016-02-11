@@ -33,7 +33,7 @@
             </ListBox.ItemsPanel>
         </ListBox>
 
-        <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="1">
+        <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="1" PreviewMouseDown="listBoxMandje_PreviewMouseDown">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="50" />
