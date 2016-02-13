@@ -21,19 +21,37 @@ namespace WpfBonApp
     /// </summary>
     public partial class Bon : Window
     {
-        public Bon()
+        //dictionary die de window van mainwindow krijgt
+        private Dictionary<int, int> artQuantityDictionaryMain;
+
+        public Bon(ref Dictionary<int, int> _artQuantityDictionaryMain)
         {
             InitializeComponent();
+
+            artQuantityDictionaryMain = _artQuantityDictionaryMain;
         }
+
+        private Model.Bon newBon;
 
         private void btnBon_Click(object sender, RoutedEventArgs e)
         {
-            //TODO de functie testen
+            //check of alle velden gevuld zijn, anders wordt er foutmelding getoond.
             if (FieldsAreFilled())
             {
+                newBon = new Model.Bon();
                 
+                //klantnaam, klantadres, klantTel, datum ophalen
+                newBon.KlantNaam = txtNaam.Text;
+                newBon.KlantAdres = txtAdres.Text;
+                newBon.KlantNummer = txtTelNr.Text;
+                newBon.OphalenDT = dtpOphalen.Value.ToString();
+
             }
-            //
+            else
+            {
+                System.Windows.MessageBox.Show("Niet alle velden zijn gevuld. Controleer de velden.");
+                return;
+            }
         }
 
         private bool FieldsAreFilled()
@@ -43,10 +61,12 @@ namespace WpfBonApp
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
+        }
+
+        internal Model.Bon GetBon()
+        {
+            return newBon ?? null;
         }
     }
 }

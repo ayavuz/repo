@@ -178,37 +178,34 @@ namespace WpfBonApp
 
         private void btnMaakBon_Click(object sender, RoutedEventArgs e)
         {
-            Bon newBon = new Bon();
-            newBon.ShowDialog();
+            //check of er items aan het mandje zijn toegevoegd
+            if (listBoxMandje.Items.Count != 0)
+            {
+                //alle artikels van listboxmandje ophalen   //ID - AANTAL
+                var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
+                                         group art.Tag by art.Tag into grp
+                                         let count = grp.Count()
+                                         //orderby count descending
+                                         select new { ID = grp.Key, Count = count };
 
-            //TIJDELIJK COMMENT
-            //if (listBoxMandje.Items.Count != 0)
-            //{
-            //    //gegevens klant vragen
+                //artikel met aantal in een lijst/dictionary zetten
+                Dictionary<int, int> artQuantityDictionary = allArtWithQuantity.ToDictionary(art => Convert.ToInt32(art.ID),
+                    art => art.Count);
 
+                //bon aanmaken en de dictionary artikelen met aantallen meegeven
+                //Bon newBon = new Bon();
+                Bon newBon = new Bon(ref artQuantityDictionary);
+                newBon.ShowDialog();
 
-
-            //    //alle artikels van listboxmandje ophalen   //ID - AANTAL
-            //    var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
-            //        group art.Tag by art.Tag
-            //        into grp
-            //        let count = grp.Count()
-            //        orderby count descending
-            //        select new {ID = grp.Key, Count = count};
-
-
-            //    //bon aanmaken
-            //    //Model.Bon newBon = new Bon();
-            //    //newBon.
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Geen artikel toegevoegd aan het mandje.");
-            //}
+            }
+            else
+            {
+                MessageBox.Show("Geen artikel toegevoegd aan het mandje.");
+            }
 
 
-            ////alle unieke IDs van artikels MET AANTAL!
+            //alle unieke IDs van artikels MET AANTAL!
         }
+
     }
 }

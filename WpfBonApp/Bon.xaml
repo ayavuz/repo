@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="Bon" Height="300" Width="320">
+        Title="Bon" Height="300" Width="320" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
