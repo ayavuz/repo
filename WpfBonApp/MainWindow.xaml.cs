@@ -97,7 +97,11 @@ namespace WpfBonApp
             nieuwWindow.ShowDialog();
         }
 
-        //listbox click event checken of het listbox item is
+        /// <summary>
+        /// Artikel aan het mandje toevoegen en totaalprijs tonen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listboxProducten_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var item =
@@ -126,11 +130,8 @@ namespace WpfBonApp
                     artTextblockNew.Text = artTextblock?.Text;
                     artTextblockNew.Tag = artikelID;
 
-                    //TODO Toevoegen aan mandje/BON + als je op een artikel klikt die verwijderen uit mandje
-                    //list aan een mandje lijst toevoegen + check of het er al in zit.
-
-                    //De product aan het mandje toevoegen
-                    listBoxMandje.Items.Add(artTextblockNew);                
+                    listBoxMandje.Items.Add(artTextblockNew);
+                    TotaalPrijsBerekenen();
                 }
                 catch (Exception ex)
                 {
@@ -140,6 +141,11 @@ namespace WpfBonApp
             }
         }
 
+        /// <summary>
+        /// Artikel verwijderen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listBoxMandje_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var item =
@@ -162,9 +168,8 @@ namespace WpfBonApp
                         return;
                     }
 
-                    //TODO het artikel van de lijst en listbox verwijderen 
                     listBoxMandje.Items.Remove(itemContent);
-
+                    TotaalPrijsBerekenen();
                 }
                 catch (Exception ex)
                 {
@@ -190,7 +195,7 @@ namespace WpfBonApp
 
                 //artikel met aantal in een lijst/dictionary zetten
                 Dictionary<int, int> artQuantityDictionary = allArtWithQuantity.ToDictionary(art => Convert.ToInt32(art.ID),
-                    art => art.Count);
+                    art => art.Count);           
 
                 //bon aanmaken en de dictionary artikelen met aantallen meegeven
                 //Bon newBon = new Bon();
@@ -207,5 +212,22 @@ namespace WpfBonApp
             //alle unieke IDs van artikels MET AANTAL!
         }
 
+        /// <summary>
+        /// totaalprijs artikelen berekenen en tonen
+        /// </summary>
+        private void TotaalPrijsBerekenen()
+        {
+            //als mandje leeg if text leeg anders tonen
+            if (listBoxMandje.Items.Count == 0) tblockTotaalPay.Text = "";
+            else
+            {
+                var totEuro = (from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
+                               select
+                                   Math.Round(Convert.ToDouble(art.Text.Substring(art.Text.LastIndexOf("€", StringComparison.Ordinal) + 2)), 2))
+                  .Sum();
+                tblockTotaalPay.Text = "\u20AC " + totEuro.ToString();
+            }
+            
+        }
     }
 }

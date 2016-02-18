@@ -49,8 +49,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
-        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="1" Content="Maak Bon" Height="25" Width="100" VerticalAlignment="Center" Click="btnMaakBon_Click" />
+
+        <TextBlock Name="tblockTotaalPay" Grid.Row="2" Grid.Column="1" Width="40" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="1" Content="Maak Bon" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnMaakBon_Click" />
         
     </Grid>
 </Window>
