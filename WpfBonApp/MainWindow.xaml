@@ -35,7 +35,17 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public" PreviewMouseDown="listboxProducten_PreviewMouseDown">
+        <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="1" Padding="5 0 5 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public" PreviewMouseDown="listboxProducten_PreviewMouseDown">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="BorderBrush" Value="AntiqueWhite"/>
+                    <Setter Property="BorderThickness" Value="1"></Setter>
+                    <Setter Property="Margin" Value="2 2 2 2"></Setter>
+                    <Setter Property="MaxHeight"  Value="250"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="5"/>
@@ -43,24 +53,25 @@
             </ListBox.ItemsPanel>
         </ListBox>
 
-        <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="2" PreviewMouseDown="listBoxMandje_PreviewMouseDown">
+        <ListBox Name="listBoxMandje" Padding="5 5 5 5" Grid.Row="1" Grid.Column="2" PreviewMouseDown="listBoxMandje_PreviewMouseDown">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="50" />
+                    <Setter Property="Background" Value="Azure"></Setter>
                 </Style>
             </ListBox.ItemContainerStyle>
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Text}" />
+                        <TextBlock Text="{Binding Text}" FontSize="16" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBlock Name="tblockTotaalPay" Grid.Row="2" Grid.Column="2" Width="40" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="2" Content="Maak Bon" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnMaakBon_Click" />
+        <TextBlock Name="tblockTotaalPay" Grid.Row="2" Grid.Column="2" Width="60" Margin="5 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="2" Content="Maak Bon" Margin="20 0 0 0" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnMaakBon_Click" />
         
     </Grid>
 </Window>

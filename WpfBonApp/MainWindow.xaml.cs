@@ -74,7 +74,7 @@ namespace WpfBonApp
             foreach (Model.Artikel artikel in listAlleArtikels)
             {
                 Image img = new Image();
-                img.Width = 150;
+                img.Width = 180;
                 img.Height = 150;
                 if (string.IsNullOrEmpty(artikel.Afbeelding))
                 {
@@ -87,7 +87,7 @@ namespace WpfBonApp
 
                 //Omschrijving onder de afbeelding
                 TextBlock txtBlock = new TextBlock();
-                txtBlock.FontSize = 14;
+                txtBlock.FontSize = 16;
                 txtBlock.Text = artikel.Omschrijving;
                 //categorie OOK TONEN?????
                 //prijs
@@ -166,9 +166,9 @@ namespace WpfBonApp
                     TextBlock artTextblock = stkpnlContent.Children[1] as TextBlock;
 
                     TextBlock artTextblockNew = new TextBlock();
-
                     artTextblockNew.Text = artTextblock?.Text;
                     artTextblockNew.Tag = artikelID;
+
 
                     listBoxMandje.Items.Add(artTextblockNew);
                     TotaalPrijsBerekenen();
@@ -269,6 +269,7 @@ namespace WpfBonApp
                             Convert.ToDouble(art.Text.Substring(art.Text.LastIndexOf("€", StringComparison.Ordinal) + 2)),
                             2))
                     .Sum();
+
                 tblockTotaalPay.Text = "\u20AC " + totEuro.ToString();
             }
 
