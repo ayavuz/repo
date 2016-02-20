@@ -11,8 +11,9 @@
         
         <Grid.ColumnDefinitions>
             <!-- <ColumnDefinition Width="79*"/> -->
-            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -21,12 +22,20 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         
-        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+        <Menu Grid.Row="0" Grid.ColumnSpan="3">
             <MenuItem x:Name="menuStart" Height="40"  Header="Start" Click="menuStart_Click"/>
             <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw artikel" Click="menuNieuw_Click"/>
         </Menu>
+        
+        <ListBox Name="listboxCategorieen" Grid.Row="1" Grid.Column="0" PreviewMouseDown="listboxCategorieen_PreviewMouseDown">
+            <ListBox.ItemTemplate >
+                <DataTemplate>
+                    <TextBlock Text="{Binding CategorieNaam}" FontSize="17"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-        <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public" PreviewMouseDown="listboxProducten_PreviewMouseDown">
+        <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public" PreviewMouseDown="listboxProducten_PreviewMouseDown">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="5"/>
@@ -34,7 +43,7 @@
             </ListBox.ItemsPanel>
         </ListBox>
 
-        <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="1" PreviewMouseDown="listBoxMandje_PreviewMouseDown">
+        <ListBox Name="listBoxMandje" Grid.Row="1" Grid.Column="2" PreviewMouseDown="listBoxMandje_PreviewMouseDown">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="50" />
@@ -50,8 +59,8 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBlock Name="tblockTotaalPay" Grid.Row="2" Grid.Column="1" Width="40" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="1" Content="Maak Bon" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnMaakBon_Click" />
+        <TextBlock Name="tblockTotaalPay" Grid.Row="2" Grid.Column="2" Width="40" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Name="btnMaakBon" Grid.Row="2" Grid.Column="2" Content="Maak Bon" Height="25" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnMaakBon_Click" />
         
     </Grid>
 </Window>

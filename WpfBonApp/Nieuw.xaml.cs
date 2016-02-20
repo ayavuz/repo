@@ -182,6 +182,7 @@ namespace WpfBonApp
         {
             //categorieen vullen
             var catList = from cat in myDB.Categories
+                          where cat.CategorieNaam.ToLower() != "alles"
                           orderby cat.CategorieNaam
                           select new { Name = cat.CategorieNaam, ID = cat.ID };
 
