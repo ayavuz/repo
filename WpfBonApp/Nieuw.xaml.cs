@@ -34,6 +34,8 @@ namespace WpfBonApp
             myDB = new Model.myDBEntities();
 
             VulCmbCategorieen();
+
+            //FillArticles();
         }
 
         
@@ -63,6 +65,11 @@ namespace WpfBonApp
 
         private void btnOpslaanNieuw_Click(object sender, RoutedEventArgs e)
         {
+            ArtikelOpslaan();
+        }
+
+        private void ArtikelOpslaan()
+        {
             //FUNCTIE VOOR VALIDATION // check of er tekst in textbox euro is ingevoerd buiten toegestane.
             if (!IsPriceValid())
             {
@@ -73,16 +80,16 @@ namespace WpfBonApp
 
             string imgPad = "";
             //check of de afbeelding bestaat
-            if(System.IO.File.Exists(txtImgPad.Text))
+            if (System.IO.File.Exists(txtImgPad.Text))
             {
                 imgPad = txtImgPad.Text;
             }
-            
+
             string omschrijving = txtOmschrijving.Text;
             //prijs omzetten naar euro en centen
-            char[] delimiters = new char[] { ',', '.' };
+            char[] delimiters = new char[] {',', '.'};
             string[] parts = txtPrijs.Text.Split(delimiters,
-                             StringSplitOptions.RemoveEmptyEntries);
+                StringSplitOptions.RemoveEmptyEntries);
             //checken als er maar 1 item in parts is alleen euro vullen en centen vullen met 00
             int euro = 0;
             int centen = 00;
@@ -97,9 +104,9 @@ namespace WpfBonApp
                     break;
             }
 
-            
+
             ///////
-            
+
             //Artiken aanmaken, vullen en aan database toevoegen
             Model.Artikel newArtikel = new Model.Artikel();
             newArtikel.Afbeelding = imgPad;
@@ -127,14 +134,14 @@ namespace WpfBonApp
                     "Er is iets misgegaan bij het toevoegen van het artikel. \nControleer de gegevens en probeer het opnieuw.");
                 return;
             }
-            
+
             //PRODUCT TOEVOEGEN AAN LISTBOXPRODUCTEN IN MAINDOW
             //img aanmaken en de source van img opgeven
             Image img = new Image();
             img.Width = 150;
 
             //als afb path niet leeg is dan.. anders default tonen
-            if(string.IsNullOrEmpty(newArtikel.Afbeelding))
+            if (string.IsNullOrEmpty(newArtikel.Afbeelding))
             {
                 img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
             }
@@ -161,7 +168,7 @@ namespace WpfBonApp
             stkpnl.Tag = newArtikel.ID;
 
             //stackpanel aan de listbox toevoegen
-            ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
+            ((MainWindow) System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
 
             //de texboxen enz resetten
             txtImgPad.Text = "";
@@ -216,5 +223,42 @@ namespace WpfBonApp
             btnSaveNieuweCat.Visibility = Visibility.Hidden;
         }
 
+
+        //private void FillArticles()
+        //{
+        //    var allArts = from art in myDB.Artikels
+        //                  orderby art.Omschrijving
+        //        select new {Name = art.Omschrijving, ID = art.ID};
+
+        //    cmbArtikels.ItemsSource = allArts.ToList();
+        //}
+
+        //private void cmbArtikels_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    ////geselecteerde artikel ophalen en de velden vullen
+        //    //int selectedArtId = Convert.ToInt32(cmbArtikels.SelectedValue);
+        //    //Model.Artikel selectedArt = myDB.Artikels.Find(selectedArtId);
+
+        //    //try
+        //    //{
+        //    //    //img aanmaken en de source van img opgeven
+        //    //    if (!string.IsNullOrEmpty(selectedArt.Afbeelding))
+        //    //        artImg.Source = new BitmapImage(new Uri(selectedArt.Afbeelding));
+        //    //    else
+        //    //        artImg.Source = null;
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    MessageBox.Show("Fout bij het laden van de afbeelding.\nControleer het pad.\n" + ex.Message);
+        //    //}
+
+        //    //txtImgPad.Text = selectedArt.Afbeelding;
+        //    //txtOmschrijving.Text = selectedArt.Omschrijving;
+        //    //txtPrijs.Text = selectedArt.PrijsEuro.ToString();
+        //    //if (selectedArt.PrijsCent != 0)
+        //    //    txtPrijs.Text += "," + selectedArt.PrijsCent.ToString();
+
+        //    //cmbCategorie.SelectedValue = selectedArt.Categorie;
+        //}
     }
 }

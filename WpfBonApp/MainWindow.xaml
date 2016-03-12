@@ -5,7 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Bon Applicatie" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <!--<ContextMenu x:Key="ListBoxItemContextMenu" DataContext="{Binding Path=Parent.Tag, RelativeSource={RelativeSource Self}}">-->
+        <ContextMenu x:Key="ListBoxItemContextMenu" DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+            <MenuItem Header="Verwijderen" Name="ArtikelDelete" Click="DeleteArtikel"/>
+        </ContextMenu>
+    </Window.Resources>
+
     <Grid>
         
         
@@ -42,9 +50,10 @@
                     <Setter Property="BorderThickness" Value="1"></Setter>
                     <Setter Property="Margin" Value="2 2 2 2"></Setter>
                     <Setter Property="MaxHeight"  Value="250"></Setter>
+
+                    <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}"/>
                 </Style>
             </ListBox.ItemContainerStyle>
-
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>

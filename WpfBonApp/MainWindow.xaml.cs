@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -144,40 +145,38 @@ namespace WpfBonApp
         /// <param name="e"></param>
         private void listboxProducten_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton != MouseButton.Left) return;
             var item =
                 ItemsControl.ContainerFromElement(listboxProducten, e.OriginalSource as DependencyObject) as ListBoxItem;
 
-            if (item != null)
+            if (item == null) return;
+            try
             {
-                try
+                int artikelID;
+                var stkpnlContent = item.Content as StackPanel;
+                if (stkpnlContent != null && stkpnlContent.Tag != null)
                 {
-                    int artikelID;
-                    var stkpnlContent = item.Content as StackPanel;
-                    if (stkpnlContent != null && stkpnlContent.Tag != null)
-                    {
-                        artikelID = Convert.ToInt16(stkpnlContent.Tag);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Artikel ID ontbreekt. Sluit de applicatie en probeer het opnieuw.");
-                        return;
-                    }
-
-                    TextBlock artTextblock = stkpnlContent.Children[1] as TextBlock;
-
-                    TextBlock artTextblockNew = new TextBlock();
-                    artTextblockNew.Text = artTextblock?.Text;
-                    artTextblockNew.Tag = artikelID;
-
-
-                    listBoxMandje.Items.Add(artTextblockNew);
-                    TotaalPrijsBerekenen();
+                    artikelID = Convert.ToInt16(stkpnlContent.Tag);
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Er is iets misgegaan bij het selecteren van het artikel. \n" + ex.Message);
+                    MessageBox.Show("Artikel ID ontbreekt. Sluit de applicatie en probeer het opnieuw.");
+                    return;
                 }
 
+                TextBlock artTextblock = stkpnlContent.Children[1] as TextBlock;
+
+                TextBlock artTextblockNew = new TextBlock();
+                artTextblockNew.Text = artTextblock?.Text;
+                artTextblockNew.Tag = artikelID;
+
+
+                listBoxMandje.Items.Add(artTextblockNew);
+                TotaalPrijsBerekenen();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Er is iets misgegaan bij het selecteren van het artikel. \n" + ex.Message);
             }
         }
 
@@ -293,6 +292,49 @@ namespace WpfBonApp
                     MessageBox.Show("Er is iets misgegaan.\n" + ex.Message);
                 }
             }
+        }
+
+        /// <summary>
+        /// artikel verwijderen uit lijst en DB?
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteArtikel(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var clickedMenuItem = (MenuItem)sender;
+                var clickedItem = (ListBoxItem)clickedMenuItem.DataContext;
+                var itemStkPnl = (StackPanel)clickedItem.Content;
+                //artikel id van de geselecteerde item
+                int artikelID = Convert.ToInt16(itemStkPnl.Tag);
+
+                string messageBoxText = "Weet je zeker dat je het artikel wilt verwijderen?";
+                string mboxCaption = "Artikel verwijderen";
+
+                MessageBoxButton btnMessagebox = MessageBoxButton.YesNo;
+                MessageBoxImage iconMessageBox = MessageBoxImage.Warning;
+
+                MessageBoxResult rsltMessageBox = MessageBox.Show(messageBoxText, mboxCaption, btnMessagebox,
+                    iconMessageBox);
+
+                switch (rsltMessageBox)
+                {
+                    case MessageBoxResult.Yes:
+                        //verwijderen //datacontext content tag
+                        
+                        break;
+
+                    case MessageBoxResult.No:
+                        //annuleren
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Er is iets misgegaan.\n" + ex.Message);
+            }
+
         }
     }
 }
