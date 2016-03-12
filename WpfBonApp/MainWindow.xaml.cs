@@ -56,6 +56,7 @@ namespace WpfBonApp
             {
                 //alle artikels laden
                 allArt = from art in myDB.Artikels
+                         where art.Actief == 1
                          orderby art.Omschrijving
                         select art;
             }
@@ -63,7 +64,7 @@ namespace WpfBonApp
             {
                 allArt = from art in myDB.Artikels
                     join art2 in myDB.Categories on art.Categorie equals art2.ID
-                    where art2.CategorieNaam.Equals(_categorie, StringComparison.InvariantCultureIgnoreCase)
+                    where art2.CategorieNaam.Equals(_categorie, StringComparison.InvariantCultureIgnoreCase) && art.Actief == 1
                     orderby art.Omschrijving
                     select art;
             }
@@ -322,7 +323,11 @@ namespace WpfBonApp
                 {
                     case MessageBoxResult.Yes:
                         //verwijderen //datacontext content tag
-                        
+                        Model.Artikel selectedArtikel = myDB.Artikels.Find(artikelID);
+                        selectedArtikel.Actief = 0;
+                        myDB.SaveChanges();
+                        LaadAlleArtikels();
+                        listBoxMandje.Items.Clear();
                         break;
 
                     case MessageBoxResult.No:

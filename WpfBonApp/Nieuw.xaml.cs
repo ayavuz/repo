@@ -118,7 +118,8 @@ namespace WpfBonApp
             {
                 newArtikel.Categorie = Convert.ToInt16(cmbCategorie.SelectedValue);
             }
-
+            //op actief
+            newArtikel.Actief = 1;
             //de nieuwe artikel toevoegen aan de database
             myDB.Artikels.Add(newArtikel);
             myDB.SaveChanges();

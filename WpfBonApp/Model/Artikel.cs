@@ -26,6 +26,7 @@ namespace WpfBonApp.Model
         public long Categorie { get; set; }
         public long PrijsEuro { get; set; }
         public long PrijsCent { get; set; }
+        public long Actief { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArtikelBon> ArtikelBons { get; set; }

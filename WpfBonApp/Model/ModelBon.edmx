@@ -15,6 +15,7 @@
           <Property Name="Categorie" Type="integer" />
           <Property Name="PrijsEuro" Type="integer" Nullable="false" />
           <Property Name="PrijsCent" Type="integer" Nullable="false" />
+          <Property Name="Actief" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="ArtikelBon">
           <Key>
@@ -124,6 +125,7 @@
           <Property Name="PrijsEuro" Type="Int64" Nullable="false" />
           <Property Name="PrijsCent" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Categorie1" Relationship="myDBModel.FK_Artikel_0_0" FromRole="Artikel" ToRole="Categorie" />
+          <Property Name="Actief" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="ArtikelBon">
           <Key>
@@ -230,6 +232,7 @@
           <EntitySetMapping Name="Artikels">
             <EntityTypeMapping TypeName="myDBModel.Artikel">
               <MappingFragment StoreEntitySet="Artikel">
+                <ScalarProperty Name="Actief" ColumnName="Actief" />
                 <ScalarProperty Name="PrijsCent" ColumnName="PrijsCent" />
                 <ScalarProperty Name="PrijsEuro" ColumnName="PrijsEuro" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
