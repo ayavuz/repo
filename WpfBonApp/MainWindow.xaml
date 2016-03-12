@@ -8,9 +8,13 @@
         Title="Bon Applicatie" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
     <Window.Resources>
-        <!--<ContextMenu x:Key="ListBoxItemContextMenu" DataContext="{Binding Path=Parent.Tag, RelativeSource={RelativeSource Self}}">-->
         <ContextMenu x:Key="ListBoxItemContextMenu" DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
-            <MenuItem Header="Verwijderen" Name="ArtikelDelete" Click="DeleteArtikel"/>
+            <MenuItem Header="Verwijder" Name="ArtikelDelete" Click="DeleteArtikel">
+                <MenuItem.Icon>
+                    <!--<Image Source="pack://application:,,,/Resources/delete.png"/>-->
+                    <Image Source="/WpfBonApp;component/Resources/delete.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
         </ContextMenu>
     </Window.Resources>
 
