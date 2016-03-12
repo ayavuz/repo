@@ -189,12 +189,12 @@ namespace WpfBonApp
         private void VulCmbCategorieen()
         {
             //categorieen vullen
-            var catList = from cat in myDB.Categories
+            var catList = from cat in myDB.Categories.AsParallel()
                           where cat.CategorieNaam.ToLower() != "alles"
                           orderby cat.CategorieNaam
                           select new { Name = cat.CategorieNaam, ID = cat.ID };
 
-            cmbCategorie.ItemsSource = catList.ToList();
+            cmbCategorie.ItemsSource = catList.ToList();    //Normaal: 33-37-34 = 34,66         Parallel: 12-7-7 = 8,66  
         }
 
         private void btnShowNieuweCat_Click(object sender, RoutedEventArgs e)

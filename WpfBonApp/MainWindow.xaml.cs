@@ -50,27 +50,26 @@ namespace WpfBonApp
         {
             listboxProducten.Items.Clear();
 
-            IQueryable<Artikel> allArt;
-
             if (_categorie == "" || _categorie.ToLower() == "alles")
             {
-                //alle artikels laden
-                allArt = from art in myDB.Artikels
-                         where art.Actief == 1
-                         orderby art.Omschrijving
-                        select art;
+                var allArtQuery = from art in myDB.Artikels.AsParallel()
+                                  where art.Actief == 1
+                                  orderby art.Omschrijving
+                                  select art;
+
+                listAlleArtikels = allArtQuery.ToList();
             }
             else
             {
-                allArt = from art in myDB.Artikels
-                    join art2 in myDB.Categories on art.Categorie equals art2.ID
+                var catArtQuery = from art in myDB.Artikels.AsParallel()
+                    join art2 in myDB.Categories.AsParallel() on art.Categorie equals art2.ID
                     where art2.CategorieNaam.Equals(_categorie, StringComparison.InvariantCultureIgnoreCase) && art.Actief == 1
                     orderby art.Omschrijving
                     select art;
-            }
 
-
-            listAlleArtikels = allArt.ToList();
+                listAlleArtikels = catArtQuery.ToList();
+            }    
+            //normaal: 2166-1931-2450-1771-2586 = 2192ms      AsParallel: 1980-1623-1561-1520-1485 = 1633ms
 
             //alle artikels loopen en toevoegen aan productenlijst
             foreach (Model.Artikel artikel in listAlleArtikels)
