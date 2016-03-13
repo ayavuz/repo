@@ -15,6 +15,19 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
+
+        <ContextMenu x:Key="CategorieContextMenu" DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+            <MenuItem Header="Wijzig naam" Name="CatChangeName" Click="EditDeleteCat">
+                <MenuItem.Icon>
+                    <Image Source="/WpfBonApp;component/Resources/tag_blue_edit.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Verwijder" Name="CatDelete" Click="EditDeleteCat">
+                <MenuItem.Icon>
+                    <Image Source="/WpfBonApp;component/Resources/tag_blue_delete.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
     </Window.Resources>
 
     <Grid>
@@ -39,6 +52,12 @@
         </Menu>
         
         <ListBox Name="listboxCategorieen" Grid.Row="1" Grid.Column="0" PreviewMouseDown="listboxCategorieen_PreviewMouseDown">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource CategorieContextMenu}"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <TextBlock Text="{Binding CategorieNaam}" FontSize="17"/>

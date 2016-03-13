@@ -207,12 +207,23 @@ namespace WpfBonApp
 
         private void btnSaveNieuweCat_Click(object sender, RoutedEventArgs e)
         {
+            //check if category already exists
+            if (myDB.Categories.Any(c => c.CategorieNaam.ToLower() == txtNieuweCat.Text.ToLower()))
+            {
+                MessageBox.Show("Categorie bestaat al.");
+                return;
+            }
+
             //nieuwe categorie opslaan
             Model.Categorie newCat = new Categorie();
             newCat.CategorieNaam = txtNieuweCat.Text;
 
             myDB.Categories.Add(newCat);
             myDB.SaveChanges();
+
+            //
+            //categorieen opnieuw laden
+            ((MainWindow)System.Windows.Application.Current.MainWindow).listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
 
             VulCmbCategorieen();
 
