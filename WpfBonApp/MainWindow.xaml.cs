@@ -42,6 +42,10 @@ namespace WpfBonApp
             //categorieen laden
             listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
             //Normaal: 1945-1940-2725-1905-2800 = 2263ms         Parallel: 1687-1693-2746-1742-2596 = 2092ms
+
+            //test selecteer categorie
+            listboxCategorieen.SelectedIndex = 4;
+            //end test
         }
 
         /// <summary>
@@ -344,72 +348,88 @@ namespace WpfBonApp
 
         private void EditDeleteCat(object sender, RoutedEventArgs e)
         {
-            var clickedMenuItem = (MenuItem)sender;
-            var clickedItem = (ListBoxItem)clickedMenuItem.DataContext;
-            var selectedCat = (Model.Categorie)clickedItem.DataContext;
-
-            //vind categorie
-            var dbCat = myDB.Categories.SingleOrDefault(c => c.CategorieNaam == selectedCat.CategorieNaam);
-
-            switch (clickedMenuItem.Name)
+            try
             {
-                case "CatChangeName": //als het edit is
-                    //prompt user new category name
-                    var newPrompt = new Prompt();
-                    newPrompt.ShowDialog();
+                var clickedMenuItem = (MenuItem)sender;
+                var clickedItem = (ListBoxItem)clickedMenuItem.DataContext;
+                var selectedCat = (Model.Categorie)clickedItem.DataContext;
 
-                    string newCatName = "";
+                //vind categorie
+                var dbCat = myDB.Categories.SingleOrDefault(c => c.CategorieNaam == selectedCat.CategorieNaam);
 
-                    if (string.IsNullOrEmpty(newPrompt.ReturnValue))
-                        return;
-                    else
-                    {
-                        newCatName = newPrompt.ReturnValue;
-                    }
-                    //wijzig categorienaam
-                    if (dbCat != null)
-                    {
-                        dbCat.CategorieNaam = newCatName;
-                        myDB.SaveChanges();
-                        //categorieen opnieuw laden
-                        listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
-                    }
-                    break;
-                case "CatDelete"://als het delete is
-                    //Vraag gebruiker of die de categorie wil verwijderen.
-                    string messageBoxText = "Weet je zeker dat je de categorie wilt verwijderen?";
-                    string mboxCaption = "Artikel verwijderen";
-                    MessageBoxButton btnMessagebox = MessageBoxButton.YesNo;
-                    MessageBoxImage iconMessageBox = MessageBoxImage.Warning;
+                switch (clickedMenuItem.Name)
+                {
+                    case "CatChangeName": //als het edit is
+                                          //prompt user new category name
+                        var newPrompt = new Prompt();
+                        newPrompt.ShowDialog();
 
-                    MessageBoxResult rsltMessageBox = MessageBox.Show(messageBoxText, mboxCaption, btnMessagebox,
-                        iconMessageBox);
+                        string newCatName = "";
 
-                    switch (rsltMessageBox)
-                    {
-                        case MessageBoxResult.Yes:
-                            //TODO alle artikels die bij de categorie horen op 0 zetten
-
-
-                            //verwijderen
-                            myDB.Categories.Remove(dbCat);
+                        if (string.IsNullOrEmpty(newPrompt.ReturnValue))
+                            return;
+                        else
+                        {
+                            newCatName = newPrompt.ReturnValue;
+                        }
+                        //wijzig categorienaam
+                        if (dbCat != null)
+                        {
+                            dbCat.CategorieNaam = newCatName;
                             myDB.SaveChanges();
-
                             //categorieen opnieuw laden
-                            listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList(); //TODO refactor dubbel? zie hierboven
-                            break;
+                            listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
+                        }
+                        break;
+                    case "CatDelete"://als het delete is
+                                     //Vraag gebruiker of die de categorie wil verwijderen.
+                        string messageBoxText = "Weet je zeker dat je de categorie wilt verwijderen?";
+                        string mboxCaption = "Artikel verwijderen";
+                        MessageBoxButton btnMessagebox = MessageBoxButton.YesNo;
+                        MessageBoxImage iconMessageBox = MessageBoxImage.Warning;
 
-                        case MessageBoxResult.No:
-                            //annuleren
-                            break;
-                    }               
-                    break;
+                        MessageBoxResult rsltMessageBox = MessageBox.Show(messageBoxText, mboxCaption, btnMessagebox,
+                            iconMessageBox);
+
+                        switch (rsltMessageBox)
+                        {
+                            case MessageBoxResult.Yes:
+                                //alle artikels die bij deze categorie horen ophalen
+                                var catArtikels = new List<Artikel>();
+
+                                var artikelsCatQuery = from art in myDB.Artikels//.AsParallel()
+                                                       where art.Categorie == selectedCat.ID
+                                                       select art;
+                                catArtikels = artikelsCatQuery.ToList();
+                                //normaal: 16 - 15 - 14 = 45ms     parallel: 7 - 6 - 6 = 19ms
+                                
+                                //artikels categorie op 0 zetten
+                                foreach (var art in catArtikels)
+                                {
+                                    art.Categorie = 0;
+                                }
+
+                                //verwijderen
+                                myDB.Categories.Remove(dbCat);
+                                myDB.SaveChanges();
+
+                                //categorieen opnieuw laden
+                                listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList(); //TODO redudantie? hierbocen ook linq
+                                break;
+
+                            case MessageBoxResult.No:
+                                //annuleren
+                                break;
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Er is iets misgegaan bij het verwijderen van de artikel\n" + ex.Message);
             }
 
-            
         }
-
-
 
     }
 }
