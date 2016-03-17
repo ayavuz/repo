@@ -27,7 +27,7 @@ namespace WpfBonApp.data
                 PrintTextFile(path);
 
                 //Delete the file
-                File.Delete(path);
+                //File.Delete(path); //TIJDELIJK COMMENT
             }
             catch (Exception ex)
             {

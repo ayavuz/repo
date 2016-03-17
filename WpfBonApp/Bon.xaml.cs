@@ -76,24 +76,42 @@ namespace WpfBonApp
                     myDB.SaveChanges();
 
                     //alle artikelbons
-                    var listAllArtBons = GetListAllArtBons();
+                    //var listAllArtBons = GetListAllArtBons();
 
                     //pad van het bestand
                     string path = @"c:\temp\Bon.txt";
 
                     string bedrijfsGegevens =
-                        string.Format("\tYavuz Software\nGeulstraat 11\n7523 TR\nEnschede\nTel:\t0624281559");
+                        string.Format("\tYavuz Kledingreparatie & Stomerij\nOpeningstijden:\nmaandag\t13:00–18:00\ndinsdag\t\t08:30–18:00\nwoensdag\t08:30–18:00\ndonderdag\t08:30–18:00\nvrijdag\t\t08:30–18:00\nzaterdag\t\t08:30–17:00\nzondag\t\tGesloten\n\nGeulstraat 11\n7523 TR\tEnschede\nTel: 0624281559\n\n\n");
 
                     //data.HelpMethods.WriteToFile(path, "AKIF IS THE BEST" + Environment.NewLine + "Bize Her Yer Trabzon");
 
                     string bonContent = "";
 
                     //content van bon samenstellen //TODO afmaken artikels
-                    bonContent =
+                    bonContent +=
                         string.Format(
                             bedrijfsGegevens +
-                            "\n\n\nBon nr: {0}\nDatum: {1}\nOphalen op: {2}\nNaam: {3}\nAdres: {4}\nTel: {5}\n",
-                            newBon.ID, newBon.BonDT, newBon.OphalenDT, newBon.KlantNaam, newBon.KlantAdres, newBon.KlantAdres);
+                            "Bon nr: {0}\nDatum: {1}\nOphalen op: {2}\nNaam: {3}\nAdres: {4}\nTel: {5}\n\n",
+                            newBon.ID, newBon.BonDT, newBon.OphalenDT, newBon.KlantNaam, newBon.KlantAdres, newBon.KlantNummer);
+
+                    //prijs totaal
+                    double prijsSubtotaal = 0;
+
+                    //artikel bons loopen
+                    foreach (var artAnt in artQuantityDictionaryMain)
+                    {
+                        var artikelBon = myDB.Artikels.Find(artAnt.Key);
+                        //prijs artikel
+                        string number = artikelBon.PrijsEuro + System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator + artikelBon.PrijsCent;
+                        double prijsArtikel = Double.Parse(number);
+                        prijsSubtotaal += prijsArtikel;
+
+                        bonContent += string.Format("{0}\t{1}\t\u20AC {2}\t\u20AC {3}\n", artAnt.Value, artikelBon.Omschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel,2));
+                    }
+
+                    //totaalprijs laten zien
+                    bonContent += string.Format("\t\t\tSubtotaal: \u20AC {0}", prijsSubtotaal);
 
                     //bon naar tekstbestand en uitprinten
                     data.HelpMethods.WriteToFile(path, bonContent);
