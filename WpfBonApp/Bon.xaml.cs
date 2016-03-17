@@ -75,43 +75,52 @@ namespace WpfBonApp
                     //artbons opslaan
                     myDB.SaveChanges();
 
-                    //TODO Bon ergens tonen hoe het eruit ziet? + Uitprinten en window sluiten?
+                    //alle artikelbons
+                    var listAllArtBons = GetListAllArtBons();
+
+                    //pad van het bestand
+                    string path = @"c:\temp\Bon.txt";
+
+                    string bedrijfsGegevens =
+                        string.Format("\tYavuz Software\nGeulstraat 11\n7523 TR\nEnschede\nTel:\t0624281559");
+
+                    //data.HelpMethods.WriteToFile(path, "AKIF IS THE BEST" + Environment.NewLine + "Bize Her Yer Trabzon");
+
+                    string bonContent = "";
+
+                    //content van bon samenstellen //TODO afmaken artikels
+                    bonContent =
+                        string.Format(
+                            bedrijfsGegevens +
+                            "\n\n\nBon nr: {0}\nDatum: {1}\nOphalen op: {2}\nNaam: {3}\nAdres: {4}\nTel: {5}\n",
+                            newBon.ID, newBon.BonDT, newBon.OphalenDT, newBon.KlantNaam, newBon.KlantAdres, newBon.KlantAdres);
+
+                    //bon naar tekstbestand en uitprinten
+                    data.HelpMethods.WriteToFile(path, bonContent);
+
+                    //TODO Bon ergens tonen hoe het eruit ziet?
+
+                    //TODO window sluiten of txt resetten?
                 }
-                //catch (DbEntityValidationException dbEx)
-                //{
-                //    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                //    {
-                //        foreach (var validationError in validationErrors.ValidationErrors)
-                //        {
-                //            System.Diagnostics.Trace.TraceInformation("Property: {0} Error: {1}",
-                //                                    validationError.PropertyName,
-                //                                    validationError.ErrorMessage);
-                //        }
-                //    }
-                //}
                 catch (Exception ex)
                 {
                     MessageBox.Show(
                         "Er is iets misgegaan bij het aanmaken van de bon. \nHerstart de applicatie en probeer opnieuw." +
                         "\nAls de probleem niet is opgelost neem contact op met de ontwikkelaar.\n" + ex.Message);                  
 
+                    //get alle artikelBons
+                    var listAllArtBons = GetListAllArtBons();
+
                     //remove alle artikelBons
-                    var allArtBons = from artBon in myDB.ArtikelBons
-                        where artBon.BonID == newBon.ID
-                        select artBon;
-
-                    var listAllArtBons = allArtBons.ToList();
-
                     foreach (var artBon in listAllArtBons)
                     {
                         myDB.ArtikelBons.Remove(artBon);
                     }
 
+                    myDB.SaveChanges();
+
                     //remove bon
-                    if (myDB.Bons.Contains(newBon))
-                    {
-                        myDB.Bons.Remove(newBon);
-                    }
+                    myDB.Bons.Remove(newBon);
 
                     myDB.SaveChanges();
                 }
@@ -122,6 +131,16 @@ namespace WpfBonApp
                 System.Windows.MessageBox.Show("Niet alle velden zijn gevuld. Controleer de velden.");
                 return;
             }
+        }
+
+        private List<ArtikelBon> GetListAllArtBons()
+        {
+            var allArtBons = from artBon in myDB.ArtikelBons
+                where artBon.BonID == newBon.ID
+                select artBon;
+
+            var listAllArtBons = allArtBons.ToList();
+            return listAllArtBons;
         }
 
         private bool FieldsAreFilled()

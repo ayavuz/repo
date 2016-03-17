@@ -127,6 +127,7 @@
     <Compile Include="Bon.xaml.cs">
       <DependentUpon>Bon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="data\HelpMethods.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
