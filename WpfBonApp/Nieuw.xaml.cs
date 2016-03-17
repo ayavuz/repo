@@ -65,7 +65,14 @@ namespace WpfBonApp
 
         private void btnOpslaanNieuw_Click(object sender, RoutedEventArgs e)
         {
-            ArtikelOpslaan();
+            try
+            {
+                ArtikelOpslaan();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Er is iets misgegaan bij het opslaan van de artikel.\n" + ex.Message);
+            }
         }
 
         private void ArtikelOpslaan()
@@ -139,7 +146,8 @@ namespace WpfBonApp
             //PRODUCT TOEVOEGEN AAN LISTBOXPRODUCTEN IN MAINDOW
             //img aanmaken en de source van img opgeven
             Image img = new Image();
-            img.Width = 150;
+            img.Width = 180;
+            img.Height = 150;
 
             //als afb path niet leeg is dan.. anders default tonen
             if (string.IsNullOrEmpty(newArtikel.Afbeelding))
@@ -154,7 +162,7 @@ namespace WpfBonApp
 
             //Gegevens onder de afbeelding
             TextBlock txtBlock = new TextBlock();
-            txtBlock.FontSize = 14;
+            txtBlock.FontSize = 16;
             txtBlock.Text = newArtikel.Omschrijving;
             //categorie OOK TONEN?????
             //prijs
@@ -168,8 +176,18 @@ namespace WpfBonApp
             //een id meegeven(van de artikel)
             stkpnl.Tag = newArtikel.ID;
 
-            //stackpanel aan de listbox toevoegen
-            ((MainWindow) System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
+            //stackpanel aan de listbox toevoegen als je op zelfde categorie bevind
+            try
+            {
+                var catID = ((Model.Categorie)((MainWindow)System.Windows.Application.Current.MainWindow).listboxCategorieen.SelectedValue).ID;
+
+                if(catID == newArtikel.Categorie)
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
+            }
+            catch (Exception)
+            {
+                //
+            }
 
             //de texboxen enz resetten
             txtImgPad.Text = "";

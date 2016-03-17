@@ -42,10 +42,6 @@ namespace WpfBonApp
             //categorieen laden
             listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
             //Normaal: 1945-1940-2725-1905-2800 = 2263ms         Parallel: 1687-1693-2746-1742-2596 = 2092ms
-
-            //test selecteer categorie
-            listboxCategorieen.SelectedIndex = 4;
-            //end test
         }
 
         /// <summary>
@@ -281,6 +277,8 @@ namespace WpfBonApp
 
         private void listboxCategorieen_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            //TODO listboxCategorieen.SelectedValue ipv item element?
+
             var item =
                 ItemsControl.ContainerFromElement(listboxCategorieen, e.OriginalSource as DependencyObject) as
                     ListBoxItem;
@@ -395,12 +393,11 @@ namespace WpfBonApp
                         {
                             case MessageBoxResult.Yes:
                                 //alle artikels die bij deze categorie horen ophalen
-                                var catArtikels = new List<Artikel>();
 
                                 var artikelsCatQuery = from art in myDB.Artikels//.AsParallel()
                                                        where art.Categorie == selectedCat.ID
                                                        select art;
-                                catArtikels = artikelsCatQuery.ToList();
+                                var catArtikels = artikelsCatQuery.ToList();
                                 //normaal: 16 - 15 - 14 = 45ms     parallel: 7 - 6 - 6 = 19ms
                                 
                                 //artikels categorie op 0 zetten
@@ -412,6 +409,9 @@ namespace WpfBonApp
                                 //verwijderen
                                 myDB.Categories.Remove(dbCat);
                                 myDB.SaveChanges();
+
+                                //productenlijst leeg maken
+                                listboxProducten.Items.Clear();
 
                                 //categorieen opnieuw laden
                                 listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList(); //TODO redudantie? hierbocen ook linq
