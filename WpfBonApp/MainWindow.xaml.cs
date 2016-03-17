@@ -352,6 +352,12 @@ namespace WpfBonApp
                 var clickedItem = (ListBoxItem)clickedMenuItem.DataContext;
                 var selectedCat = (Model.Categorie)clickedItem.DataContext;
 
+                if (selectedCat.CategorieNaam == "Alles")
+                {
+                    MessageBox.Show("Je kunt de categorie Alles niet wijzigen of verwijderen.");
+                    return;
+                }
+
                 //vind categorie
                 var dbCat = myDB.Categories.SingleOrDefault(c => c.CategorieNaam == selectedCat.CategorieNaam);
 

@@ -93,10 +93,26 @@ namespace WpfBonApp
                 {
                     MessageBox.Show(
                         "Er is iets misgegaan bij het aanmaken van de bon. \nHerstart de applicatie en probeer opnieuw." +
-                        "\nAls de probleem niet is opgelost neem contact op met de ontwikkelaar.\n" + ex.Message);
+                        "\nAls de probleem niet is opgelost neem contact op met de ontwikkelaar.\n" + ex.Message);                  
+
+                    //remove alle artikelBons
+                    var allArtBons = from artBon in myDB.ArtikelBons
+                        where artBon.BonID == newBon.ID
+                        select artBon;
+
+                    var listAllArtBons = allArtBons.ToList();
+
+                    foreach (var artBon in listAllArtBons)
+                    {
+                        myDB.ArtikelBons.Remove(artBon);
+                    }
 
                     //remove bon
-                    myDB.Bons.Remove(newBon);
+                    if (myDB.Bons.Contains(newBon))
+                    {
+                        myDB.Bons.Remove(newBon);
+                    }
+
                     myDB.SaveChanges();
                 }
 
