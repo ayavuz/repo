@@ -75,12 +75,10 @@ namespace WpfBonApp
                     //artbons opslaan
                     myDB.SaveChanges();
 
-                    //alle artikelbons
-                    //var listAllArtBons = GetListAllArtBons();
-
                     //pad van het bestand
                     string path = @"c:\temp\Bon.txt";
 
+                    //TODO bedrijfsgegevens van properties laden
                     string bedrijfsGegevens =
                         string.Format("\tYavuz Kledingreparatie & Stomerij\nOpeningstijden:\nmaandag\t13:00–18:00\ndinsdag\t\t08:30–18:00\nwoensdag\t08:30–18:00\ndonderdag\t08:30–18:00\nvrijdag\t\t08:30–18:00\nzaterdag\t\t08:30–17:00\nzondag\t\tGesloten\n\nGeulstraat 11\n7523 TR\tEnschede\nTel: 0624281559\n\n\n");
 
@@ -88,7 +86,7 @@ namespace WpfBonApp
 
                     string bonContent = "";
 
-                    //content van bon samenstellen //TODO afmaken artikels
+                    //content van bon samenstellen //TODO afmaken artikels + tabs bij bon dt ophalen klantnaam adres etc.
                     bonContent +=
                         string.Format(
                             bedrijfsGegevens +
@@ -97,6 +95,11 @@ namespace WpfBonApp
 
                     //prijs totaal
                     double prijsSubtotaal = 0;
+
+                    //langste artikel vinden
+                    var alleArtikelOmschrijvingen = artQuantityDictionaryMain.Select(art => myDB.Artikels.Find(art.Key).Omschrijving).ToList();
+                    string langsteArtOmschrijving = alleArtikelOmschrijvingen.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
+                    int langsteArtLengte = langsteArtOmschrijving.Length;
 
                     //artikel bons loopen
                     foreach (var artAnt in artQuantityDictionaryMain)
@@ -107,7 +110,10 @@ namespace WpfBonApp
                         double prijsArtikel = Double.Parse(number);
                         prijsSubtotaal += prijsArtikel;
 
-                        bonContent += string.Format("{0}\t{1}\t\u20AC {2}\t\u20AC {3}\n", artAnt.Value, artikelBon.Omschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel,2));
+                        //als artikel omschrijving te kort is dan vullen met spaties
+                        string artOmschrijving = artikelBon.Omschrijving.Length < langsteArtLengte ? artikelBon.Omschrijving.PadRight(langsteArtLengte) : artikelBon.Omschrijving;
+
+                        bonContent += string.Format("{0}\t{1}\t\u20AC {2}\t\u20AC {3}\n", artAnt.Value, artOmschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel,2));
                     }
 
                     //totaalprijs laten zien
