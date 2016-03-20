@@ -22,5 +22,65 @@ namespace WpfBonApp.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BedrijfsNaam {
+            get {
+                return ((string)(this["BedrijfsNaam"]));
+            }
+            set {
+                this["BedrijfsNaam"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BedrijfsAdres {
+            get {
+                return ((string)(this["BedrijfsAdres"]));
+            }
+            set {
+                this["BedrijfsAdres"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BedrijfsPlaats {
+            get {
+                return ((string)(this["BedrijfsPlaats"]));
+            }
+            set {
+                this["BedrijfsPlaats"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BedrijfsTelNr {
+            get {
+                return ((string)(this["BedrijfsTelNr"]));
+            }
+            set {
+                this["BedrijfsTelNr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BedrijfsTijden {
+            get {
+                return ((string)(this["BedrijfsTijden"]));
+            }
+            set {
+                this["BedrijfsTijden"] = value;
+            }
+        }
     }
 }

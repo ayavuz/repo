@@ -134,9 +134,14 @@ namespace WpfBonApp
 
         private void menuNieuw_Click(object sender, RoutedEventArgs e)
         {
-            //tijdelijk gecommentarieerd
             Nieuw nieuwWindow = new Nieuw();
             nieuwWindow.ShowDialog();
+        }
+
+        private void menuBeheer_Click(object sender, RoutedEventArgs e)
+        {
+            Beheer beheerWindow = new Beheer();
+            beheerWindow.ShowDialog();
         }
 
         /// <summary>
@@ -437,5 +442,6 @@ namespace WpfBonApp
 
         }
 
+        
     }
 }
