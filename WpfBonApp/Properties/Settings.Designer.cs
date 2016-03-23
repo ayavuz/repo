@@ -82,5 +82,17 @@ namespace WpfBonApp.Properties {
                 this["BedrijfsTijden"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BedrijfsPostcode {
+            get {
+                return ((string)(this["BedrijfsPostcode"]));
+            }
+            set {
+                this["BedrijfsPostcode"] = value;
+            }
+        }
     }
 }

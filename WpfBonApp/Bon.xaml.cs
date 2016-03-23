@@ -78,23 +78,22 @@ namespace WpfBonApp
                     //pad van het bestand
                     string path = @"c:\temp\Bon.txt";
 
-                    //TODO bedrijfsgegevens van properties laden
+                    //bedrijfsgegevens van properties laden
+                    var Settings = Properties.Settings.Default;
                     string bedrijfsGegevens =
-                        string.Format("\tYavuz Kledingreparatie & Stomerij\nOpeningstijden:\nmaandag\t13:00–18:00\ndinsdag\t\t08:30–18:00\nwoensdag\t08:30–18:00\ndonderdag\t08:30–18:00\nvrijdag\t\t08:30–18:00\nzaterdag\t\t08:30–17:00\nzondag\t\tGesloten\n\nGeulstraat 11\n7523 TR\tEnschede\nTel: 0624281559\n\n\n");
-
-                    //data.HelpMethods.WriteToFile(path, "AKIF IS THE BEST" + Environment.NewLine + "Bize Her Yer Trabzon");
+                        string.Format("\t{0}\nOpeningstijden:\n{1}\n\n{2}\n{3} {4}\nTel: {5}\n\n\n", Settings.BedrijfsNaam, Settings.BedrijfsTijden, Settings.BedrijfsAdres, Settings.BedrijfsPostcode, Settings.BedrijfsPlaats, Settings.BedrijfsTelNr);
 
                     string bonContent = "";
 
-                    //content van bon samenstellen //TODO afmaken artikels + tabs bij bon dt ophalen klantnaam adres etc.
+                    //content van bon samenstellen //TODO afmaken artikels (gaat mis met smalle woorden)
                     bonContent +=
                         string.Format(
                             bedrijfsGegevens +
-                            "Bon nr: {0}\nDatum: {1}\nOphalen op: {2}\nNaam: {3}\nAdres: {4}\nTel: {5}\n\n",
+                            "Bon nr: \t\t{0}\nDatum: \t\t{1}\nOphalen op: \t{2}\nNaam: \t\t{3}\nAdres: \t\t{4}\nTel: \t\t{5}\n\n",
                             newBon.ID, newBon.BonDT, newBon.OphalenDT, newBon.KlantNaam, newBon.KlantAdres, newBon.KlantNummer);
 
                     //prijs totaal
-                    double prijsSubtotaal = 0;
+                    double prijsTotaal = 0;
 
                     //langste artikel vinden
                     var alleArtikelOmschrijvingen = artQuantityDictionaryMain.Select(art => myDB.Artikels.Find(art.Key).Omschrijving).ToList();
@@ -108,7 +107,7 @@ namespace WpfBonApp
                         //prijs artikel
                         string number = artikelBon.PrijsEuro + System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator + artikelBon.PrijsCent;
                         double prijsArtikel = Double.Parse(number);
-                        prijsSubtotaal += prijsArtikel;
+                        prijsTotaal += prijsArtikel;
 
                         //als artikel omschrijving te kort is dan vullen met spaties
                         string artOmschrijving = artikelBon.Omschrijving.Length < langsteArtLengte ? artikelBon.Omschrijving.PadRight(langsteArtLengte) : artikelBon.Omschrijving;
@@ -117,14 +116,12 @@ namespace WpfBonApp
                     }
 
                     //totaalprijs laten zien
-                    bonContent += string.Format("\t\t\tSubtotaal: \u20AC {0}", prijsSubtotaal);
+                    bonContent += string.Format("\n\t\tTotaal incl. Btw: \u20AC {0}", prijsTotaal);
 
                     //bon naar tekstbestand en uitprinten
                     data.HelpMethods.WriteToFile(path, bonContent);
 
-                    //TODO Bon ergens tonen hoe het eruit ziet?
-
-                    //TODO window sluiten of txt resetten?
+                    this.Close();
                 }
                 catch (Exception ex)
                 {

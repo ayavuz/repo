@@ -35,6 +35,13 @@ namespace WpfBonApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //TEST
+            //var Settings = Properties.Settings.Default;
+            //string bedrijfsGegevens =
+            //            string.Format("\t{0}\nOpeningstijden:\n{1}\n\n{2}\n{3} {4}\nTel: {5}\n\n\n", Settings.BedrijfsNaam, Settings.BedrijfsTijden, Settings.BedrijfsAdres, Settings.BedrijfsPostcode, Settings.BedrijfsPlaats, Settings.BedrijfsTelNr);
+
+
+
             myDB = new Model.myDBEntities();
 
             LaadAlleArtikels();
@@ -111,25 +118,7 @@ namespace WpfBonApp
 
         private void menuStart_Click(object sender, RoutedEventArgs e)
         {
-            ////TEEEESTTTTTT
-            ////Omschrijving onder de afbeelding
-            //TextBlock txtBlock = new TextBlock();
-            //txtBlock.FontSize = 14;
-            //txtBlock.Text = "Test " + listboxProducten.Items.Count.ToString();
 
-            ////afbeelding en omschrijving in een stackpanel zetten
-            //StackPanel stkpnl = new StackPanel();
-            //Image img = new Image();
-            //img.Width = 150;
-            //img.Height = 150;
-            //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
-
-            //stkpnl.Children.Add(img);
-            //stkpnl.Children.Add(txtBlock);
-
-            ////stackpanel aan de listbox toevoegen
-            //listboxProducten.Items.Add(stkpnl);
-            ////END TEEEEESTTTT
         }
 
         private void menuNieuw_Click(object sender, RoutedEventArgs e)

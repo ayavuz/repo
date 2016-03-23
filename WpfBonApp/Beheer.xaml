@@ -21,6 +21,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="200"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
@@ -35,15 +36,18 @@
         <TextBlock Grid.Column="1" Grid.Row="2" FontSize="14" Text="Adres:" VerticalAlignment="Center"/>
         <TextBox Name="txtAdres" Grid.Row="2" Grid.Column="2" Height="20" Width="130" HorizontalAlignment="Center"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="14" Text="Plaats:" VerticalAlignment="Center"/>
-        <TextBox Name="txtPlaats" Grid.Row="3" Grid.Column="2" Height="20" Width="130" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="14" Text="Postcode:" VerticalAlignment="Center"/>
+        <TextBox Name="txtPostcode" Grid.Row="3" Grid.Column="2" Height="20" Width="130" HorizontalAlignment="Center"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="4" FontSize="14" Text="Tel. Nr:" VerticalAlignment="Center"/>
-        <TextBox Name="txtTelNr" Grid.Row="4" Grid.Column="2" Height="20" Width="130" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Grid.Row="4" FontSize="14" Text="Plaats:" VerticalAlignment="Center"/>
+        <TextBox Name="txtPlaats" Grid.Row="4" Grid.Column="2" Height="20" Width="130" HorizontalAlignment="Center"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="14" Text="Openingstijden:" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="10" Text="Bij gesloten laat de tijdstipbox leeg" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-        <Grid Grid.Column="2" Grid.Row="5">
+        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="14" Text="Tel. Nr:" VerticalAlignment="Center"/>
+        <TextBox Name="txtTelNr" Grid.Row="5" Grid.Column="2" Height="20" Width="130" HorizontalAlignment="Center"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="6" FontSize="14" Text="Openingstijden:" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="1" Grid.Row="6" FontSize="10" Text="Bij gesloten laat de tijdstipbox leeg" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <Grid Grid.Column="2" Grid.Row="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition />
@@ -97,7 +101,7 @@
         </Grid>
 
         
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal" Width="200">
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" Orientation="Horizontal" Width="200">
             <Button Name="btnOpslaan" Content="Opslaan" Height="25" Width="80" Click="btnOpslaan_Click"/>
             <Button Name="btnAnnuleren" Content="Annuleren" Height="25" Width="80" Margin="40 0 0 0" RenderTransformOrigin="0.5,0.504" Click="btnAnnuleren_Click"/>
         </StackPanel>

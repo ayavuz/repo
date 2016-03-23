@@ -51,6 +51,7 @@ namespace WpfBonApp.data
                     flowDocument.Blocks.Add(myParagraph);
                 }
                 DocumentPaginator paginator = ((IDocumentPaginatorSource)flowDocument).DocumentPaginator;
+                
                 printDialog.PrintDocument(paginator, "Bon");
             }
 

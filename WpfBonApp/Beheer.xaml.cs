@@ -50,6 +50,7 @@ namespace WpfBonApp
 
                 txtNaam.Text = Settings.BedrijfsNaam;
                 txtAdres.Text = Settings.BedrijfsAdres;
+                txtPostcode.Text = Settings.BedrijfsPostcode;
                 txtPlaats.Text = Settings.BedrijfsPlaats;
                 txtTelNr.Text = Settings.BedrijfsTelNr;
                 StringToOpeninstijden();
@@ -68,6 +69,7 @@ namespace WpfBonApp
 
                 Settings.BedrijfsNaam = txtNaam.Text;
                 Settings.BedrijfsAdres = txtAdres.Text;
+                Settings.BedrijfsPostcode = txtPostcode.Text;
                 Settings.BedrijfsPlaats = txtPlaats.Text;
                 Settings.BedrijfsTelNr = txtTelNr.Text;
                 Settings.BedrijfsTijden = OpeningstijdenToString();
@@ -90,8 +92,11 @@ namespace WpfBonApp
             string zaterdag = string.IsNullOrEmpty(TpZaterdagVan.Text) || string.IsNullOrEmpty(TpZaterdagTot.Text) ? "Gesloten" : TpZaterdagVan.Text + " - " + TpZaterdagTot.Text;
             string zondag = string.IsNullOrEmpty(TpZondagVan.Text) || string.IsNullOrEmpty(TpZondagTot.Text) ? "Gesloten" : TpZondagVan.Text + " - " + TpZondagTot.Text;
 
+            //string openingstijden =
+            //    $"Maandag:   {maandag}  |  Dinsdag:   {dinsdag}\nWoensdag:  {woensdag}  |  Donderdag: {donderdag}\nVrijdag:   {vrijdag}  |  Zaterdag:  {zaterdag}\nZondag:    {zondag}";
+
             string openingstijden =
-                $"Maandag: {maandag}  |  Dinsdag: {dinsdag}\nWoensdag: {woensdag}   |   Donderdag: {donderdag}\nVrijdag: {vrijdag}   |   Zaterdag: {zaterdag}\nZondag: {zondag}";
+                $"Maandag: {maandag}\nDinsdag: {dinsdag}\nWoensdag: {woensdag}\nDonderdag: {donderdag}\nVrijdag: {vrijdag}\nZaterdag: {zaterdag}\nZondag: {zondag}";
 
             return openingstijden;
         }
