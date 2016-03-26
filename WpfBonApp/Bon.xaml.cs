@@ -100,6 +100,12 @@ namespace WpfBonApp
                     string langsteArtOmschrijving = alleArtikelOmschrijvingen.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
                     int langsteArtLengte = langsteArtOmschrijving.Length;
 
+                    //style bon artikels
+                    bonContent += string.Format("{0}\t{1}\t{2}\t{3}", "Aantal",
+                        "Omschrijving".PadRight(langsteArtLengte), "Prijs p/s", "Prijs");
+                    bonContent += "-------------------------------------------------------\n";
+                    
+
                     //artikel bons loopen
                     foreach (var artAnt in artQuantityDictionaryMain)
                     {
@@ -110,11 +116,13 @@ namespace WpfBonApp
                         prijsTotaal += prijsArtikel;
 
                         //als artikel omschrijving te kort is dan vullen met spaties
-                        string artOmschrijving = artikelBon.Omschrijving.Length < langsteArtLengte ? artikelBon.Omschrijving.PadRight(langsteArtLengte) : artikelBon.Omschrijving;
+                        int aantalSpaties = artikelBon.Omschrijving.Count(Char.IsWhiteSpace);
+                        string artOmschrijving = artikelBon.Omschrijving.Length < langsteArtLengte ? artikelBon.Omschrijving.PadRight(langsteArtLengte + aantalSpaties) : artikelBon.Omschrijving;
 
                         bonContent += string.Format("{0}\t{1}\t\u20AC {2}\t\u20AC {3}\n", artAnt.Value, artOmschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel,2));
                     }
 
+                    bonContent += "-------------------------------------------------------\n";
                     //totaalprijs laten zien
                     bonContent += string.Format("\n\t\tTotaal incl. Btw: \u20AC {0}", prijsTotaal);
 
