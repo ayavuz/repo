@@ -51,7 +51,6 @@ namespace WpfBonApp.data
                     myParagraph.Margin = new Thickness(0);
                     myParagraph.Inlines.Add(new Run(line));
                     myParagraph.FontSize = 10.0;
-                    //myParagraph.FontStretch = FontStretch.FromOpenTypeStretch(1); //TEST
                     flowDocument.Blocks.Add(myParagraph);
                 }
                 DocumentPaginator paginator = ((IDocumentPaginatorSource)flowDocument).DocumentPaginator;
@@ -70,14 +69,11 @@ namespace WpfBonApp.data
                 int pos = response.LastIndexOf(" ", maxLength);
                 if (pos < maxLength-5)
                 {
-                    pos = maxLength;
+                    pos = maxLength -5;
                 }
-                //response = response.Substring(0, pos);
                 stringClipArray[0] = response.Substring(0, pos);
                 stringClipArray[1] = response.Substring(pos, original.Length - pos).Trim();
             }
-
-            //return response;
             return stringClipArray;
         }
 

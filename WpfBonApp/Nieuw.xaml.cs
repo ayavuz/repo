@@ -77,7 +77,14 @@ namespace WpfBonApp
 
         private void ArtikelOpslaan()
         {
-            //FUNCTIE VOOR VALIDATION // check of er tekst in textbox euro is ingevoerd buiten toegestane.
+            //check max karakters omschrijving
+            if (txtOmschrijving.Text.Length > 40)
+            {
+                MessageBox.Show("De omschrijving mag maximaal 40 karakters bevatten.");
+                return;
+            }
+
+            //check of er tekst in textbox euro is ingevoerd buiten toegestane.
             if (!IsPriceValid())
             {
                 MessageBox.Show("Prijs verkeerd ingevoerd. \nAlleen nummers, punt en komma toegestaan.");
@@ -176,13 +183,21 @@ namespace WpfBonApp
             //een id meegeven(van de artikel)
             stkpnl.Tag = newArtikel.ID;
 
-            //stackpanel aan de listbox toevoegen als je op zelfde categorie bevind
+            //stackpanel aan de listbox toevoegen als je op zelfde categorie bevindt of als categorie 1 is (Alles)
             try
             {
-                var catID = ((Model.Categorie)((MainWindow)System.Windows.Application.Current.MainWindow).listboxCategorieen.SelectedValue).ID;
-
-                if(catID == newArtikel.Categorie)
+                //als er geen artikel geselecteerd is
+                if(((MainWindow)System.Windows.Application.Current.MainWindow).listboxCategorieen.SelectedIndex == -1)
+                {
                     ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
+                }
+                else
+                {
+                    var catID = ((Model.Categorie)((MainWindow)System.Windows.Application.Current.MainWindow).listboxCategorieen.SelectedValue).ID;
+
+                    if (catID == newArtikel.Categorie || catID == 1)
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).listboxProducten.Items.Add(stkpnl);
+                }              
             }
             catch (Exception)
             {

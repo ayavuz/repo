@@ -143,6 +143,9 @@ namespace WpfBonApp
                     //bon naar tekstbestand en uitprinten
                     data.HelpMethods.WriteToFile(path, bonContent);
 
+                    //mandje opschonen
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).listBoxMandje.Items.Clear();
+
                     this.Close();
                 }
                 catch (Exception ex)
