@@ -35,12 +35,6 @@ namespace WpfBonApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //TEST
-            //var Settings = Properties.Settings.Default;
-            //string bedrijfsGegevens =
-            //            string.Format("\t{0}\nOpeningstijden:\n{1}\n\n{2}\n{3} {4}\nTel: {5}\n\n\n", Settings.BedrijfsNaam, Settings.BedrijfsTijden, Settings.BedrijfsAdres, Settings.BedrijfsPostcode, Settings.BedrijfsPlaats, Settings.BedrijfsTelNr);
-
-
 
             myDB = new Model.myDBEntities();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace WpfBonApp.data
 {
@@ -48,13 +50,35 @@ namespace WpfBonApp.data
                     Paragraph myParagraph = new Paragraph();
                     myParagraph.Margin = new Thickness(0);
                     myParagraph.Inlines.Add(new Run(line));
+                    myParagraph.FontSize = 10.0;
+                    //myParagraph.FontStretch = FontStretch.FromOpenTypeStretch(1); //TEST
                     flowDocument.Blocks.Add(myParagraph);
                 }
                 DocumentPaginator paginator = ((IDocumentPaginatorSource)flowDocument).DocumentPaginator;
                 
                 printDialog.PrintDocument(paginator, "Bon");
             }
+        }
 
+        public static String[] ParseButDontClip(String original, int maxLength)
+        {
+            String response = original;
+            string[] stringClipArray = new string[2];
+
+            if (response.Length > 15)
+            {
+                int pos = response.LastIndexOf(" ", maxLength);
+                if (pos < maxLength-5)
+                {
+                    pos = maxLength;
+                }
+                //response = response.Substring(0, pos);
+                stringClipArray[0] = response.Substring(0, pos);
+                stringClipArray[1] = response.Substring(pos, original.Length - pos).Trim();
+            }
+
+            //return response;
+            return stringClipArray;
         }
 
     }

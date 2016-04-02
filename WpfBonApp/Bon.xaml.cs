@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfBonApp.data;
 using WpfBonApp.Model;
 using Xceed.Wpf.Toolkit;
 using MessageBox = System.Windows.MessageBox;
@@ -85,7 +86,7 @@ namespace WpfBonApp
 
                     string bonContent = "";
 
-                    //content van bon samenstellen //TODO afmaken artikels (gaat mis met smalle woorden)
+                    //content van bon samenstellen
                     bonContent +=
                         string.Format(
                             bedrijfsGegevens +
@@ -101,11 +102,10 @@ namespace WpfBonApp
                     int langsteArtLengte = langsteArtOmschrijving.Length;
 
                     //style bon artikels
-                    bonContent += string.Format("{0}\t{1}\t{2}\t{3}", "Aantal",
-                        "Omschrijving".PadRight(langsteArtLengte), "Prijs p/s", "Prijs");
-                    bonContent += "-------------------------------------------------------\n";
+                    bonContent += string.Format("{0}\t{1}\t{2}\t{3}\n", "Aantal",
+                        "Omschrijving".PadRight(20), "Prijs p/s", "Prijs");
+                    //bonContent += "-------------------------------------------------------\n";
                     
-
                     //artikel bons loopen
                     foreach (var artAnt in artQuantityDictionaryMain)
                     {
@@ -117,12 +117,26 @@ namespace WpfBonApp
 
                         //als artikel omschrijving te kort is dan vullen met spaties
                         int aantalSpaties = artikelBon.Omschrijving.Count(Char.IsWhiteSpace);
-                        string artOmschrijving = artikelBon.Omschrijving.Length < langsteArtLengte ? artikelBon.Omschrijving.PadRight(langsteArtLengte + aantalSpaties) : artikelBon.Omschrijving;
+                        string artOmschrijving = artikelBon.Omschrijving.Length < langsteArtLengte ? artikelBon.Omschrijving : artikelBon.Omschrijving;
 
-                        bonContent += string.Format("{0}\t{1}\t\u20AC {2}\t\u20AC {3}\n", artAnt.Value, artOmschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel,2));
+
+                        //Als een artikelOmschrijving te lang is dan de rest op volgende regel.
+                        if (artikelBon.Omschrijving.Length > 16)
+                        {
+                            string[] clippedArray = HelpMethods.ParseButDontClip(artikelBon.Omschrijving, 16);
+                            string ArtOmschrPart1 = clippedArray[0];
+                            string ArtOmschrPart2 = clippedArray[1];
+
+                            bonContent += string.Format("{0}\t{1, -20}\t\u20AC {2}\t\u20AC {3}\n\t{4}\n", artAnt.Value, ArtOmschrPart1, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2), ArtOmschrPart2);
+                        }
+                        else
+                        {
+                            bonContent += string.Format("{0}\t{1, -20}\t\u20AC {2}\t\u20AC {3}\n", artAnt.Value, artOmschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2));
+                        }                         
+                        
                     }
 
-                    bonContent += "-------------------------------------------------------\n";
+                    //bonContent += "-------------------------------------------------------\n";
                     //totaalprijs laten zien
                     bonContent += string.Format("\n\t\tTotaal incl. Btw: \u20AC {0}", prijsTotaal);
 
@@ -135,7 +149,7 @@ namespace WpfBonApp
                 {
                     MessageBox.Show(
                         "Er is iets misgegaan bij het aanmaken van de bon. \nHerstart de applicatie en probeer opnieuw." +
-                        "\nAls de probleem niet is opgelost neem contact op met de ontwikkelaar.\n" + ex.Message);                  
+                        "\nAls het probleem niet is opgelost neem contact op met de ontwikkelaar.\n" + ex.Message);                  
 
                     //get alle artikelBons
                     var listAllArtBons = GetListAllArtBons();
