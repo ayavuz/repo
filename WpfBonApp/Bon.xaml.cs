@@ -102,10 +102,13 @@ namespace WpfBonApp
                     int langsteArtLengte = langsteArtOmschrijving.Length;
 
                     //style bon artikels
-                    bonContent += string.Format("{0}\t{1}\t{2}\t   {3}\n", "Aantal",
-                        "Omschrijving".PadRight(20), "Prijs p/s", "Prijs");
-                    //bonContent += "-------------------------------------------------------\n";
-                    
+                    //bonContent += string.Format("{0}\t{1}\t{2}\t   {3}\n", "Aantal",
+                    //    "Omschrijving".PadRight(20), "Prijs p/s", "Prijs");
+                    bonContent += string.Format("{0}\t{1}\t{2}\t{3}\n", "Aantal",
+                        "Prijs p/s", "Omschrijving".PadRight(20), "Prijs");
+
+                    bonContent += "-----------------------------------------------------\n";
+
                     //artikel bons loopen
                     foreach (var artAnt in artQuantityDictionaryMain)
                     {
@@ -128,20 +131,21 @@ namespace WpfBonApp
                             string ArtOmschrPart1 = clippedArray[0];
                             string ArtOmschrPart2 = clippedArray[1];
 
-                            //bonContent += string.Format("{0}\t{1, -20}\t\u20AC {2}\t\u20AC {3}\n\t{4}\n", artAnt.Value, ArtOmschrPart1, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2), ArtOmschrPart2);
-                            bonContent += string.Format("{0}\t{1, -20}\t{2:C2}\t{3:C2}\n\t{4}\n", artAnt.Value, ArtOmschrPart1, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2), ArtOmschrPart2);
+                            //bonContent += string.Format("{0}\t{1, -20}\t{2:C2}\t{3:C2}\n\t{4}\n", artAnt.Value, ArtOmschrPart1, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2), ArtOmschrPart2);
+                            bonContent += string.Format("{0}\t{1:C2}\t{2, -20}\t{3:C2}\n\t{4}\n", artAnt.Value, prijsArtikel, ArtOmschrPart1, Math.Round(artAnt.Value * prijsArtikel, 2), ArtOmschrPart2);
                         }
                         else
                         {
-                            bonContent += string.Format("{0}\t{1, -20}\t{2:C2}\t{3:C2}\n", artAnt.Value, artOmschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2));
+                            //bonContent += string.Format("{0}\t{1, -20}\t{2:C2}\t{3:C2}\n", artAnt.Value, artOmschrijving, prijsArtikel, Math.Round(artAnt.Value * prijsArtikel, 2));
+                            bonContent += string.Format("{0}\t{1:C2}\t{2, -20}\t{3:C2}\n", artAnt.Value, prijsArtikel, artOmschrijving, Math.Round(artAnt.Value * prijsArtikel, 2));
                         }                         
                         
                     }
 
-                    //bonContent += "-------------------------------------------------------\n";
+                    bonContent += "-----------------------------------------------------\n";
                     //totaalprijs laten zien
                     //bonContent += string.Format("\n\t\tTotaal incl. Btw: \u20AC {0}", prijsTotaal);
-                    bonContent += string.Format("\n\t\tTotaal incl. Btw: {0:C2}", prijsTotaal);
+                    bonContent += string.Format("\n\t\tTotaal incl. Btw:   {0:C2}", prijsTotaal);
 
                     //bon naar tekstbestand en uitprinten
                     data.HelpMethods.WriteToFile(path, bonContent);
