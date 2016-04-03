@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfBonApp"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Beheer" Height="580" Width="500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico">
+        Title="Beheer" Height="580" Width="500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico" ResizeMode="NoResize" Background="#F0F2EB">
     <Grid>
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="10"/>
@@ -23,7 +23,9 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="200"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
@@ -100,16 +102,16 @@
             <xctk:TimePicker Name="TpZondagTot" Grid.Column="2" Grid.Row="7" Width="70" HorizontalAlignment="Right"/>
         </Grid>
 
-        <Border BorderThickness="1" Grid.Column="1" Grid.Row="7" BorderBrush="LightGray">
+        <Border BorderThickness="1" Grid.Column="1" Grid.Row="8" BorderBrush="LightGray">
             <Image x:Name="artImg" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Height="100" Width="150" VerticalAlignment="Top"/>
         </Border>
-        <TextBlock Grid.Column="2" Grid.Row="7" Margin="5 5 5 5" HorizontalAlignment="Center" Text="Kies een standaard afbeelding voor de artikels."/>
-        <StackPanel Grid.Column="2" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center">
+        <TextBlock Grid.Column="2" Grid.Row="8" Margin="5 5 5 5" HorizontalAlignment="Center" Text="Kies een standaard afbeelding voor de artikels."/>
+        <StackPanel Grid.Column="2" Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBox Name="txtImgPad" IsReadOnly="True" Height="20" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Button Name="btnKiesImg" Content="Kies afbeelding" Height="20" Margin="20 0 0 0" Click="btnKiesImg_Click"/>
         </StackPanel>
         
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" Orientation="Horizontal" Width="200">
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="10" Orientation="Horizontal" Width="200">
             <Button Name="btnOpslaan" Content="Opslaan" Height="25" Width="80" Click="btnOpslaan_Click"/>
             <Button Name="btnAnnuleren" Content="Annuleren" Height="25" Width="80" Margin="40 0 0 0" RenderTransformOrigin="0.5,0.504" Click="btnAnnuleren_Click"/>
         </StackPanel>

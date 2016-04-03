@@ -39,11 +39,18 @@ namespace WpfBonApp
 
             myDB = new Model.myDBEntities();
 
-            LaadAlleArtikels();
-
+            //check of artikels bestaat
+            if (myDB.Artikels.Any())
+            {
+                LaadAlleArtikels();              
+            }
             //categorieen laden
-            listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
-            //Normaal: 1945-1940-2725-1905-2800 = 2263ms         Parallel: 1687-1693-2746-1742-2596 = 2092ms
+            if (myDB.Categories.Any())
+            {
+                listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
+            }
+
+
         }
 
         /// <summary>

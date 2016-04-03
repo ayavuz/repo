@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="Vul in" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Vul in" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#F0F2EB" Icon="Bon.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

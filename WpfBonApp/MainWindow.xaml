@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="Bon Applicatie" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico">
+        Title="Bon Applicatie" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico" Background="#99B2B7">
 
     <Window.Resources>
         <ContextMenu x:Key="ListBoxItemContextMenu" DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
@@ -45,16 +45,18 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        
-        <Menu Grid.Row="0" Grid.ColumnSpan="3">
+
+        <Menu Grid.Row="0" Grid.ColumnSpan="3" Background="#99B2B7">
             <MenuItem x:Name="menuStart" Height="40"  Header="Start" Click="menuStart_Click"/>
             <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw" Click="menuNieuw_Click"/>
             <MenuItem x:Name="menuBeheer" Height="40" Header="Beheer" Click="menuBeheer_Click"/>
         </Menu>
-        
+
         <ListBox Name="listboxCategorieen" Grid.Row="1" Grid.Column="0" PreviewMouseDown="listboxCategorieen_PreviewMouseDown">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="50" />
+                    <Setter Property="Background" Value="#D5DED9" />
                     <Setter Property="ContextMenu" Value="{StaticResource CategorieContextMenu}"/>
                 </Style>
             </ListBox.ItemContainerStyle>
@@ -69,7 +71,7 @@
         <ListBox x:Name="listboxProducten" Grid.Row="1" Grid.Column="1" Padding="5 0 5 0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:FieldModifier="public" PreviewMouseDown="listboxProducten_PreviewMouseDown">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="BorderBrush" Value="AntiqueWhite"/>
+                    <Setter Property="BorderBrush" Value="#99B2B7"/>
                     <Setter Property="BorderThickness" Value="1"></Setter>
                     <Setter Property="Margin" Value="2 2 2 2"></Setter>
                     <Setter Property="MaxHeight"  Value="250"></Setter>
@@ -90,7 +92,7 @@
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="80" />
-                    <Setter Property="Background" Value="Azure"></Setter>
+                    <Setter Property="Background" Value="#D5DED9" />
                 </Style>
             </ListBox.ItemContainerStyle>
 

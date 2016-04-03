@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="Nieuw Artikel" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico">
+        Title="Nieuw Artikel" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico" Background="#F0F2EB">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
