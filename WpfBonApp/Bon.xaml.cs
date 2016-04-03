@@ -113,7 +113,8 @@ namespace WpfBonApp
                         //prijs artikel
                         string number = artikelBon.PrijsEuro + System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator + artikelBon.PrijsCent;
                         double prijsArtikel = Double.Parse(number);
-                        prijsTotaal += prijsArtikel;
+                        //prijsTotaal += prijsArtikel;
+                        prijsTotaal += prijsArtikel * artAnt.Value;
 
                         //als artikel omschrijving te kort is dan vullen met spaties
                         int aantalSpaties = artikelBon.Omschrijving.Count(Char.IsWhiteSpace);
@@ -143,8 +144,9 @@ namespace WpfBonApp
                     //bon naar tekstbestand en uitprinten
                     data.HelpMethods.WriteToFile(path, bonContent);
 
-                    //mandje opschonen
+                    //mandje opschonen en totaalprijs resetten
                     ((MainWindow)System.Windows.Application.Current.MainWindow).listBoxMandje.Items.Clear();
+                    ((MainWindow) System.Windows.Application.Current.MainWindow).tblockTotaalPay.Text = "";
 
                     this.Close();
                 }

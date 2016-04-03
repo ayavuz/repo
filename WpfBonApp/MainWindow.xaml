@@ -73,6 +73,7 @@
                     <Setter Property="BorderThickness" Value="1"></Setter>
                     <Setter Property="Margin" Value="2 2 2 2"></Setter>
                     <Setter Property="MaxHeight"  Value="250"></Setter>
+                    <!--<Setter Property="MaxWidth"  Value="250"></Setter>-->
 
                     <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}"/>
                 </Style>

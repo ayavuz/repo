@@ -64,7 +64,7 @@ namespace WpfBonApp.data
             String response = original;
             string[] stringClipArray = new string[2];
 
-            if (response.Length > 15)
+            if (response.Length > maxLength)
             {
                 int pos = response.LastIndexOf(" ", maxLength);
                 if (pos < maxLength-5)

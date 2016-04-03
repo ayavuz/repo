@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfBonApp.data;
 using WpfBonApp.Model;
 
 namespace WpfBonApp
@@ -92,7 +93,17 @@ namespace WpfBonApp
                 TextBlock txtBlock = new TextBlock();
                 txtBlock.FontSize = 16;
                 txtBlock.Text = artikel.Omschrijving;
+
+                //als artikel te lang is dan nog een textblock toevoegen. //dit kan beter met de helpmethode
+                if (artikel.Omschrijving.Length > 25)
+                {
+                    string[] omschrijvingParsed = HelpMethods.ParseButDontClip(artikel.Omschrijving, 25);
+                    txtBlock.Text = omschrijvingParsed[0];
+                    txtBlock.Text += Environment.NewLine + omschrijvingParsed[1];
+                }
+
                 //categorie OOK TONEN?????
+
                 //prijs
                 txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent;
 
