@@ -49,7 +49,7 @@ namespace WpfBonApp
         /// <summary>
         /// alle artikelen laden
         /// </summary>
-        private void LaadAlleArtikels(string _categorie = "")
+        internal void LaadAlleArtikels(string _categorie = "")
         {
             listboxProducten.Items.Clear();
 
@@ -82,11 +82,28 @@ namespace WpfBonApp
                 img.Height = 150;
                 if (string.IsNullOrEmpty(artikel.Afbeelding))
                 {
-                    img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+                    //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+                    img.Source = new BitmapImage(new Uri(Properties.Settings.Default.DefaultAfbeelding));
                 }
                 else
                 {
-                    img.Source = new BitmapImage(new Uri(artikel.Afbeelding));
+                    try
+                    {
+                        img.Source = new BitmapImage(new Uri(artikel.Afbeelding));
+                    }
+                    catch (Exception ex1) //als het fout gaat default img gebruiken
+                    {
+                        try
+                        {
+                            //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+                            img.Source = new BitmapImage(new Uri(Properties.Settings.Default.DefaultAfbeelding));
+                        }
+                        catch (Exception ex2)
+                        {
+                            MessageBox.Show("Er is iets misgegaan bij het landen van de artikelafbeelding.\n" +
+                                            ex2.Message);
+                        }
+                    }
                 }
 
                 //Omschrijving onder de afbeelding
@@ -102,7 +119,7 @@ namespace WpfBonApp
                     txtBlock.Text += Environment.NewLine + omschrijvingParsed[1];
                 }
 
-                //categorie OOK TONEN?????
+                //categorie OOK TONEN?
 
                 //txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent;
                 txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent.ToString("00");
@@ -329,7 +346,7 @@ namespace WpfBonApp
                         selectedArtikel.Actief = 0;
                         myDB.SaveChanges();
                         LaadAlleArtikels();
-                        listBoxMandje.Items.Clear();
+                        listBoxMandje.Items.Clear();             
                         break;
 
                     case MessageBoxResult.No:
@@ -421,6 +438,9 @@ namespace WpfBonApp
 
                                 //categorieen opnieuw laden
                                 listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList(); //TODO redudantie? hierbocen ook linq
+
+                                //opnieuw naar tab alles en alle artikels tonen
+                                LaadAlleArtikels("alles");
                                 break;
 
                             case MessageBoxResult.No:

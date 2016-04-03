@@ -54,6 +54,13 @@ namespace WpfBonApp
                 txtPlaats.Text = Settings.BedrijfsPlaats;
                 txtTelNr.Text = Settings.BedrijfsTelNr;
                 StringToOpeninstijden();
+
+                //img laden
+                if (!string.IsNullOrEmpty(Settings.DefaultAfbeelding))
+                {
+                    txtImgPad.Text = Settings.DefaultAfbeelding;
+                    artImg.Source = new BitmapImage(new Uri(Settings.DefaultAfbeelding));
+                }
             }
             catch (Exception ex)
             {
@@ -74,7 +81,25 @@ namespace WpfBonApp
                 Settings.BedrijfsTelNr = txtTelNr.Text;
                 Settings.BedrijfsTijden = OpeningstijdenToString();
 
+                string currentImg = Settings.DefaultAfbeelding;
+                string imgPad = "";
+                //check of de afbeelding bestaat
+                if (System.IO.File.Exists(txtImgPad.Text))
+                {
+                    imgPad = txtImgPad.Text;
+                }
+                if (!string.IsNullOrEmpty(imgPad))
+                {
+                    Settings.DefaultAfbeelding = imgPad;
+                }
+
                 Settings.Save();
+
+                //Als default image veranderd is dan artikels opnieuw laden
+                if (!string.IsNullOrEmpty(currentImg) && !currentImg.Equals(Settings.DefaultAfbeelding))
+                {
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).LaadAlleArtikels("alles");
+                }
             }
             catch (Exception ex)
             {
@@ -150,6 +175,28 @@ namespace WpfBonApp
             }
 
         }
-       
+
+        private void btnKiesImg_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".jpg";
+            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                string filename = dlg.FileName;
+                txtImgPad.Text = filename;
+
+                artImg.Source = new BitmapImage(new Uri(filename));
+            }
+        }
     }
 }

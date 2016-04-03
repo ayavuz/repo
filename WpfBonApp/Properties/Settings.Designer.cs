@@ -94,5 +94,17 @@ namespace WpfBonApp.Properties {
                 this["BedrijfsPostcode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultAfbeelding {
+            get {
+                return ((string)(this["DefaultAfbeelding"]));
+            }
+            set {
+                this["DefaultAfbeelding"] = value;
+            }
+        }
     }
 }
