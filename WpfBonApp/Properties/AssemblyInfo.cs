@@ -7,13 +7,13 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WpfBonApp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Bon Applicatie")]
+[assembly: AssemblyDescription("Met de Bon Applicatie kun je artikels toevoegen en een bonnetje uitprinten.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WpfBonApp")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Yavuz Software")]
+[assembly: AssemblyProduct("BonApp")]
+[assembly: AssemblyCopyright("Copyright ©  2016 - Yavuz Software")]
+[assembly: AssemblyTrademark("Yavuz Software")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

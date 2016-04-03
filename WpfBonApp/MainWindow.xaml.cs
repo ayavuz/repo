@@ -82,8 +82,11 @@ namespace WpfBonApp
                 img.Height = 150;
                 if (string.IsNullOrEmpty(artikel.Afbeelding))
                 {
-                    //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
-                    img.Source = new BitmapImage(new Uri(Properties.Settings.Default.DefaultAfbeelding));
+                    if (!string.IsNullOrEmpty(Properties.Settings.Default.DefaultAfbeelding))
+                    {
+                        //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+                        img.Source = new BitmapImage(new Uri(Properties.Settings.Default.DefaultAfbeelding));
+                    }                 
                 }
                 else
                 {
@@ -100,8 +103,8 @@ namespace WpfBonApp
                         }
                         catch (Exception ex2)
                         {
-                            MessageBox.Show("Er is iets misgegaan bij het landen van de artikelafbeelding.\n" +
-                                            ex2.Message);
+                            //MessageBox.Show("Er is iets misgegaan bij het laden van de artikelafbeelding.\n" +
+                            //                ex2.Message);
                         }
                     }
                 }

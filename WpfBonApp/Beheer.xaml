@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfBonApp"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Beheer" Height="580" Width="500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Beheer" Height="580" Width="500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico">
     <Grid>
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="10"/>
