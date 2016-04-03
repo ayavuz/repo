@@ -104,8 +104,8 @@ namespace WpfBonApp
 
                 //categorie OOK TONEN?????
 
-                //prijs
-                txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent;
+                //txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent;
+                txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent.ToString("00");
 
                 //afbeelding en omschrijving in een stackpanel zetten
                 StackPanel stkpnl = new StackPanel();
@@ -269,7 +269,8 @@ namespace WpfBonApp
                             2))
                     .Sum();
 
-                tblockTotaalPay.Text = "\u20AC " + totEuro.ToString();
+                //tblockTotaalPay.Text = "\u20AC " + totEuro.ToString();
+                tblockTotaalPay.Text = totEuro.ToString("C2");
             }
 
         }
