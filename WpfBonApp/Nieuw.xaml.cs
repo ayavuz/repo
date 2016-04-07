@@ -159,7 +159,11 @@ namespace WpfBonApp
             //als afb path niet leeg is dan.. anders default tonen
             if (string.IsNullOrEmpty(newArtikel.Afbeelding))
             {
-                img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+                //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
+                if (!string.IsNullOrEmpty(Properties.Settings.Default.DefaultAfbeelding))
+                {
+                    img.Source = new BitmapImage(new Uri(Properties.Settings.Default.DefaultAfbeelding));
+                }             
             }
             else
             {
