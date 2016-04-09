@@ -36,13 +36,20 @@ namespace WpfBonApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Type providerService = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
 
             myDB = new Model.myDBEntities();
+
+            if (myDB == null)
+            {
+                MessageBox.Show("Er is iets misgegaan bij het laden van de database.");
+                return;
+            }
 
             //check of artikels bestaat
             if (myDB.Artikels.Any())
             {
-                LaadAlleArtikels();              
+                LaadAlleArtikels();
             }
             //categorieen laden
             if (myDB.Categories.Any())

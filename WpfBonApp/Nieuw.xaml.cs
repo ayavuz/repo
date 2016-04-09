@@ -71,7 +71,7 @@ namespace WpfBonApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Er is iets misgegaan bij het opslaan van de artikel.\n" + ex.Message);
+                MessageBox.Show("Er is iets misgegaan bij het opslaan van het artikel.\n" + ex.Message);
             }
         }
 
@@ -94,10 +94,14 @@ namespace WpfBonApp
 
             string imgPad = "";
             //check of de afbeelding bestaat
-            if (System.IO.File.Exists(txtImgPad.Text))
+            if (!string.IsNullOrEmpty(txtImgPad.Text))
             {
-                imgPad = txtImgPad.Text;
+                if (System.IO.File.Exists(txtImgPad.Text))
+                {
+                    imgPad = txtImgPad.Text;
+                }
             }
+            
 
             string omschrijving = txtOmschrijving.Text;
             //prijs omzetten naar euro en centen
