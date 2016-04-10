@@ -176,10 +176,11 @@ namespace WpfBonApp
                     txtBlock.Text += Environment.NewLine + omschrijvingParsed[1];
                 }
 
-                //categorie OOK TONEN?
-
-                //txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent;
+                //prijs
                 txtBlock.Text += Environment.NewLine + "\u20AC " + artikel.PrijsEuro + "," + artikel.PrijsCent.ToString("00");
+                //string number = artikel.PrijsEuro + System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator + artikel.PrijsCent;
+                //double prijsArtikel = Double.Parse(number);
+                //txtBlock.Text += string.Format("\n{0:C2}", prijsArtikel);
 
                 //afbeelding en omschrijving in een stackpanel zetten
                 StackPanel stkpnl = new StackPanel();
@@ -299,18 +300,7 @@ namespace WpfBonApp
             //check of er items aan het mandje zijn toegevoegd
             if (listBoxMandje.Items.Count != 0)
             {
-                //alle artikels van listboxmandje ophalen   //ID - AANTAL
-                var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
-                    group art.Tag by art.Tag
-                    into grp
-                    let count = grp.Count()
-                        //orderby count descending
-                    select new {ID = grp.Key, Count = count};
-
-                //artikel met aantal in een lijst/dictionary zetten
-                Dictionary<int, int> artQuantityDictionary =
-                    allArtWithQuantity.ToDictionary(art => Convert.ToInt32(art.ID),
-                        art => art.Count);
+                var artQuantityDictionary = CreateArtQuantityDictionary();
 
                 //bon aanmaken en de dictionary artikelen met aantallen meegeven
                 //Bon newBon = new Bon();
@@ -322,9 +312,23 @@ namespace WpfBonApp
             {
                 MessageBox.Show("Geen artikel toegevoegd aan het mandje.");
             }
+        }
 
+        private Dictionary<int, int> CreateArtQuantityDictionary()
+        {
+//alle artikels van listboxmandje ophalen   //ID - AANTAL
+            var allArtWithQuantity = from art in listBoxMandje.Items.Cast<TextBlock>().ToList()
+                group art.Tag by art.Tag
+                into grp
+                let count = grp.Count()
+                    //orderby count descending
+                select new {ID = grp.Key, Count = count};
 
-            //alle unieke IDs van artikels MET AANTAL!
+            //artikel met aantal in een lijst/dictionary zetten
+            Dictionary<int, int> artQuantityDictionary =
+                allArtWithQuantity.ToDictionary(art => Convert.ToInt32(art.ID),
+                    art => art.Count);
+            return artQuantityDictionary;
         }
 
         /// <summary>

@@ -7,6 +7,13 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Beheer" Height="580" Width="500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico" ResizeMode="NoResize" Background="#F0F2EB">
+
+    <Window.Resources>
+        <Style TargetType="xctk:TimePicker">
+            <Setter Property="StartTime" Value="6:0:0" />
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="10"/>
@@ -67,7 +74,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="Maandag: "/>
-            <xctk:TimePicker Name="TpMaandagVan" Grid.Column="2" Grid.Row="1" Width="70" HorizontalAlignment="Left"/>
+            <xctk:TimePicker Name="TpMaandagVan" Grid.Column="2" Grid.Row="1" Width="70" HorizontalAlignment="Left" StartTime="6:0:0"/>
             <TextBlock Grid.Column="2" Grid.Row="1" Text="-" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <xctk:TimePicker Name="TpMaandagTot" Grid.Column="2" Grid.Row="1" Width="70" HorizontalAlignment="Right"/>
 

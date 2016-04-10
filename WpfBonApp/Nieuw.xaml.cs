@@ -210,9 +210,13 @@ namespace WpfBonApp
             TextBlock txtBlock = new TextBlock();
             txtBlock.FontSize = 16;
             txtBlock.Text = newArtikel.Omschrijving;
-            //categorie OOK TONEN?????
+
             //prijs
-            txtBlock.Text += Environment.NewLine + "\u20AC " + newArtikel.PrijsEuro + "," + newArtikel.PrijsCent;
+            //string number = newArtikel.PrijsEuro + System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator + newArtikel.PrijsCent;
+            //double prijsArtikel = Double.Parse(number);
+            //txtBlock.Text += string.Format("\n{0:C2}", prijsArtikel);
+            //txtBlock.Text += Environment.NewLine + "\u20AC " + newArtikel.PrijsEuro + "," + newArtikel.PrijsCent; //OUD
+            txtBlock.Text += Environment.NewLine + "\u20AC " + newArtikel.PrijsEuro + "," + newArtikel.PrijsCent.ToString("00");
 
             //afbeelding en omschrijving in een stackpanel zetten
             StackPanel stkpnl = new StackPanel();
