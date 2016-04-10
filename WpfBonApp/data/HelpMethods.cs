@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -29,11 +32,11 @@ namespace WpfBonApp.data
                 PrintTextFile(path);
 
                 //Delete the file
-                //File.Delete(path); //TIJDELIJK COMMENT
+                File.Delete(path);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Er is iets misgegaan bij het afdrukken van het bestand.\n" + Environment.NewLine);
+                MessageBox.Show("Er is iets misgegaan bij het afdrukken van het bestand.\n" + ex.Message);
             }
         }
 
@@ -76,6 +79,7 @@ namespace WpfBonApp.data
             }
             return stringClipArray;
         }
+
 
     }
 }

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,8 +40,14 @@ namespace WpfBonApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Type providerService = typeof(System.Data.Entity.SqlServer.SqlProviderServices);
+            //als db niet bestaat dan return
+            if (CheckDBandChangeConn()) return;
 
+            LoadDBandFillData();
+        }
+
+        private void LoadDBandFillData()
+        {
             myDB = new Model.myDBEntities();
 
             if (myDB == null)
@@ -54,10 +64,40 @@ namespace WpfBonApp
             //categorieen laden
             if (myDB.Categories.Any())
             {
-                listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
+                listboxCategorieen.ItemsSource =
+                    myDB.Categories.AsParallel()
+                        .OrderByDescending(c => c.CategorieNaam.ToLower() == "alles")
+                        .ThenBy(c => c.CategorieNaam)
+                        .ToList();
+            }
+        }
+
+        private bool CheckDBandChangeConn()
+        {
+//mydb.db locatie in appdata folder ophalen
+            string mydbPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Bon App\\myDB.db";
+            if (!File.Exists(mydbPath))
+            {
+                MessageBox.Show("De database is niet beschikbaar.\nNeem contact op met de maker van de applicatie.");
+                return true;
+            }
+            //nieuwe connectionstring setten //
+            var conString =
+                string.Format(
+                    "metadata=res://*/Model.ModelBon.csdl|res://*/Model.ModelBon.ssdl|res://*/Model.ModelBon.msl;provider=System.Data.SQLite.EF6;provider connection string='data source={0}'",
+                    mydbPath);
+            //verander de connectionstring
+            try
+            {
+                ModifyEFconnection(conString);
+            }
+            catch (Exception)
+            {
+                return true;
             }
 
-
+            Type providerService = typeof (System.Data.Entity.SqlServer.SqlProviderServices);
+            return false;
         }
 
         /// <summary>
@@ -108,14 +148,14 @@ namespace WpfBonApp
                     {
                         img.Source = new BitmapImage(new Uri(artikel.Afbeelding));
                     }
-                    catch (Exception ex1) //als het fout gaat default img gebruiken
+                    catch (Exception) //als het fout gaat default img gebruiken
                     {
                         try
                         {
                             //img.Source = new BitmapImage(new Uri(@"/img/yavuz_new.jpg", UriKind.Relative));
                             img.Source = new BitmapImage(new Uri(Properties.Settings.Default.DefaultAfbeelding));
                         }
-                        catch (Exception ex2)
+                        catch (Exception)
                         {
                             //MessageBox.Show("Er is iets misgegaan bij het laden van de artikelafbeelding.\n" +
                             //                ex2.Message);
@@ -474,6 +514,15 @@ namespace WpfBonApp
 
         }
 
-        
+
+        private void ModifyEFconnection(string conString)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+            connectionStringsSection.ConnectionStrings["myDBEntities"].ConnectionString = conString;
+            config.Save();
+            ConfigurationManager.RefreshSection("connectionStrings");
+        }
+
     }
 }

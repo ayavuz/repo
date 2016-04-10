@@ -47,7 +47,7 @@
 
         <TextBlock Visibility="Hidden" Name="tblockNewCat" Text="Naam nieuwe Categorie: " Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"/>
         <TextBox Visibility="Hidden" Name="txtNieuweCat"  Grid.Column="3" Grid.Row="5" Width="150" Height="20" HorizontalAlignment="Left"/>
-        <Button Visibility="Hidden" Name="btnSaveNieuweCat" Grid.Column="3" Grid.Row="5" Content="Categorie Opslaan" Height="20" Width="120" Margin="150 0 0 0" Click="btnSaveNieuweCat_Click"/>
+        <!--<Button Visibility="Hidden" Name="btnSaveNieuweCat" Grid.Column="3" Grid.Row="5" Content="Categorie Opslaan" Height="20" Width="120" Margin="150 0 0 0" Click="btnSaveNieuweCat_Click"/>-->
         
         <Button Name="btnOpslaanNieuw" Height="20" Width="100" Grid.Column="3" Grid.Row="6" Content="Opslaan" HorizontalAlignment="Left" Click="btnOpslaanNieuw_Click"/>
     </Grid>

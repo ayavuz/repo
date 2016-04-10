@@ -42,24 +42,31 @@ namespace WpfBonApp
 
         private void btnKiesImg_Click(object sender, RoutedEventArgs e)
         {
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension 
-            dlg.DefaultExt = ".jpg";
-            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and display in a TextBox 
-            if (result == true)
+            try
             {
-                // Open document 
-                string filename = dlg.FileName;
-                txtImgPad.Text = filename;
+                // Create OpenFileDialog 
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
-                artImg.Source = new BitmapImage(new Uri(filename));
+                // Set filter for file extension and default file extension 
+                //dlg.DefaultExt = ".jpg";
+                //dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+
+                // Display OpenFileDialog by calling ShowDialog method 
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Get the selected file name and display in a TextBox 
+                if (result == true)
+                {
+                    // Open document 
+                    string filename = dlg.FileName;
+                    txtImgPad.Text = filename;
+
+                    artImg.Source = new BitmapImage(new Uri(filename));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Er is iets misgegaan bij het laden van de afbeelding.\n" + ex.Message);
             }
         }
 
@@ -91,7 +98,6 @@ namespace WpfBonApp
                 return;
             }
 
-
             string imgPad = "";
             //check of de afbeelding bestaat
             if (!string.IsNullOrEmpty(txtImgPad.Text))
@@ -101,7 +107,6 @@ namespace WpfBonApp
                     imgPad = txtImgPad.Text;
                 }
             }
-            
 
             string omschrijving = txtOmschrijving.Text;
             //prijs omzetten naar euro en centen
@@ -122,7 +127,6 @@ namespace WpfBonApp
                     break;
             }
 
-
             ///////
 
             //Artiken aanmaken, vullen en aan database toevoegen
@@ -131,13 +135,40 @@ namespace WpfBonApp
             newArtikel.Omschrijving = omschrijving;
             newArtikel.PrijsEuro = euro;
             newArtikel.PrijsCent = centen;
+
             //als er een categorie geselecteerd is
             if (cmbCategorie.SelectedIndex != -1)
             {
                 newArtikel.Categorie = Convert.ToInt16(cmbCategorie.SelectedValue);
             }
+            else if (!string.IsNullOrEmpty(txtNieuweCat.Text)) //anders de gevulde categorienaam opslaan
+            {
+                if (CategorieOpslaan())
+                {
+                    MessageBox.Show("Er is iets misgegaan bij het opslaan van de categorie.");
+                    return;
+                }
+                else
+                {
+                    //opgeslagen catID ophalen.
+                    var catID = from cat in myDB.Categories.AsEnumerable()
+                        where cat.CategorieNaam.ToLower() == txtNieuweCat.Text.ToLower()
+                        select cat.ID;
+
+                    //newArtikel.Categorie = Convert.ToInt16(catID);
+                    newArtikel.Categorie = Convert.ToInt16(catID.FirstOrDefault());
+
+                    if (newArtikel.Categorie == 0)
+                    {
+                        MessageBox.Show("Er is iets misgegaan bij het aanmaken van het artikel. (fout categorie)");
+                        return;
+                    }
+                }
+            }
+
             //op actief
             newArtikel.Actief = 1;
+
             //de nieuwe artikel toevoegen aan de database
             myDB.Artikels.Add(newArtikel);
             myDB.SaveChanges();
@@ -217,6 +248,7 @@ namespace WpfBonApp
             txtOmschrijving.Text = "";
             txtPrijs.Text = "";
             artImg.Source = null;
+            cmbCategorie.SelectedIndex = -1;
         }
 
         private bool IsPriceValid()
@@ -243,16 +275,37 @@ namespace WpfBonApp
             //nieuwe categorie controls tonen
             tblockNewCat.Visibility = Visibility.Visible;
             txtNieuweCat.Visibility = Visibility.Visible;
-            btnSaveNieuweCat.Visibility = Visibility.Visible;
+            //btnSaveNieuweCat.Visibility = Visibility.Visible;
+
+            cmbCategorie.SelectedIndex = -1;
         }
 
-        private void btnSaveNieuweCat_Click(object sender, RoutedEventArgs e)
+        //private void btnSaveNieuweCat_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (CategorieOpslaan()) return;
+
+        //    //controls resetten
+        //    txtNieuweCat.Text = "";
+        //    cmbCategorie.SelectedIndex = -1;
+        //    tblockNewCat.Visibility = Visibility.Hidden;
+        //    txtNieuweCat.Visibility = Visibility.Hidden;
+        //    btnSaveNieuweCat.Visibility = Visibility.Hidden;
+        //}
+
+        private bool CategorieOpslaan()
         {
+            //als categorie leeg is
+            if (string.IsNullOrEmpty(txtNieuweCat.Text))
+            {
+                MessageBox.Show("Categorie is leeg.");
+                return true;
+            }
+
             //check if category already exists
             if (myDB.Categories.Any(c => c.CategorieNaam.ToLower() == txtNieuweCat.Text.ToLower()))
             {
                 MessageBox.Show("Categorie bestaat al.");
-                return;
+                return true;
             }
 
             //nieuwe categorie opslaan
@@ -264,16 +317,14 @@ namespace WpfBonApp
 
             //
             //categorieen opnieuw laden
-            ((MainWindow)System.Windows.Application.Current.MainWindow).listboxCategorieen.ItemsSource = myDB.Categories.AsParallel().OrderByDescending(c => c.CategorieNaam.ToLower() == "alles").ThenBy(c => c.CategorieNaam).ToList();
+            ((MainWindow) System.Windows.Application.Current.MainWindow).listboxCategorieen.ItemsSource =
+                myDB.Categories.AsParallel()
+                    .OrderByDescending(c => c.CategorieNaam.ToLower() == "alles")
+                    .ThenBy(c => c.CategorieNaam)
+                    .ToList();
 
             VulCmbCategorieen();
-
-            //controls resetten
-            txtNieuweCat.Text = "";
-            cmbCategorie.SelectedIndex = -1;
-            tblockNewCat.Visibility = Visibility.Hidden;
-            txtNieuweCat.Visibility = Visibility.Hidden;
-            btnSaveNieuweCat.Visibility = Visibility.Hidden;
+            return false;
         }
 
 

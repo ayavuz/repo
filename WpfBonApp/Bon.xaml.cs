@@ -74,10 +74,7 @@ namespace WpfBonApp
                         myDB.ArtikelBons.Add(artBon);
                     }
                     //artbons opslaan
-                    myDB.SaveChanges();
-
-                    //pad van het bestand
-                    string path = @"c:\temp\Bon.txt";
+                    myDB.SaveChanges();         
 
                     //bedrijfsgegevens van properties laden
                     var Settings = Properties.Settings.Default;
@@ -147,6 +144,8 @@ namespace WpfBonApp
                     //bonContent += string.Format("\n\t\tTotaal incl. Btw: \u20AC {0}", prijsTotaal);
                     bonContent += string.Format("\n\t\tTotaal incl. Btw:   {0:C2}", prijsTotaal);
 
+                    //pad van het bestand
+                    string path = @"c:\temp\Bon.txt";
                     //bon naar tekstbestand en uitprinten
                     data.HelpMethods.WriteToFile(path, bonContent);
 
@@ -182,7 +181,8 @@ namespace WpfBonApp
             }
             else
             {
-                System.Windows.MessageBox.Show("Niet alle velden zijn gevuld. Controleer de velden.");
+                //System.Windows.MessageBox.Show("Niet alle velden zijn gevuld. Controleer de velden.");
+                System.Windows.MessageBox.Show("Niet alle velden zijn goed gevuld. Controleer de velden Naam en Datum ophalen.");
                 return;
             }
         }
@@ -199,8 +199,9 @@ namespace WpfBonApp
 
         private bool FieldsAreFilled()
         {
-            if (!string.IsNullOrEmpty(txtNaam.Text) && !string.IsNullOrEmpty(txtAdres.Text) &&
-                !string.IsNullOrEmpty(txtTelNr.Text) && (dtpOphalen.Value != null))
+            //if (!string.IsNullOrEmpty(txtNaam.Text) && !string.IsNullOrEmpty(txtAdres.Text) &&
+            //    !string.IsNullOrEmpty(txtTelNr.Text) && (dtpOphalen.Value != null))
+            if (!string.IsNullOrEmpty(txtNaam.Text) && (dtpOphalen.Value != null))
             {
                 return true;
             }
