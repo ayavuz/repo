@@ -41,8 +41,8 @@ namespace WpfBonApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //als db niet bestaat dan return
-            if (CheckDBandChangeConn()) return;
-
+            //if (CheckDBandChangeConn()) return;
+            
             LoadDBandFillData();
         }
 
@@ -55,7 +55,6 @@ namespace WpfBonApp
                 MessageBox.Show("Er is iets misgegaan bij het laden van de database.");
                 return;
             }
-
             //check of artikels bestaat
             if (myDB.Artikels.Any())
             {
@@ -72,33 +71,33 @@ namespace WpfBonApp
             }
         }
 
-        private bool CheckDBandChangeConn()
-        {
-//mydb.db locatie in appdata folder ophalen
-            string mydbPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Bon App\\myDB.db";
-            if (!File.Exists(mydbPath))
-            {
-                MessageBox.Show("De database is niet beschikbaar.\nNeem contact op met de maker van de applicatie.");
-                return true;
-            }
-            //nieuwe connectionstring setten //
-            var conString =
-                string.Format(
-                    "metadata=res://*/Model.ModelBon.csdl|res://*/Model.ModelBon.ssdl|res://*/Model.ModelBon.msl;provider=System.Data.SQLite.EF6;provider connection string='data source={0}'",
-                    mydbPath);
-            //verander de connectionstring
-            try
-            {
-                ModifyEFconnection(conString);
-            }
-            catch (Exception)
-            {
-                return true;
-            }
+        //private bool CheckDBandChangeConn()
+        //{
+        //    //mydb.db locatie in appdata folder ophalen
+        //    string mydbPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Bon App\\myDB.db";
+        //    if (!File.Exists(mydbPath))
+        //    {
+        //        MessageBox.Show("De database is niet beschikbaar.\nNeem contact op met de maker van de applicatie.");
+        //        return true;
+        //    }
+        //    //nieuwe connectionstring setten //
+        //    var conString =
+        //        string.Format(
+        //            "metadata=res://*/Model.ModelBon.csdl|res://*/Model.ModelBon.ssdl|res://*/Model.ModelBon.msl;provider=System.Data.SQLite.EF6;provider connection string='data source={0}'",
+        //            mydbPath);
+        //    //verander de connectionstring
+        //    try
+        //    {
+        //        ModifyEFconnection(conString);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return true;
+        //    }
 
-            Type providerService = typeof (System.Data.Entity.SqlServer.SqlProviderServices);
-            return false;
-        }
+        //    Type providerService = typeof (System.Data.Entity.SqlServer.SqlProviderServices);
+        //    return false;
+        //}
 
         /// <summary>
         /// alle artikelen laden
@@ -519,14 +518,23 @@ namespace WpfBonApp
         }
 
 
-        private void ModifyEFconnection(string conString)
-        {
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
-            connectionStringsSection.ConnectionStrings["myDBEntities"].ConnectionString = conString;
-            config.Save();
-            ConfigurationManager.RefreshSection("connectionStrings");
-        }
+        //private void ModifyEFconnection(string conString)
+        //{
+        //    //try
+        //    //{
+        //    //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //    //    var connectionStringsSection = (ConnectionStringsSection)config.GetSection("connectionStrings");
+        //    //    connectionStringsSection.ConnectionStrings["myDBEntities"].ConnectionString = conString;
+        //    //    config.Save(); //HIER CRASHED DE APP ??
+        //    //    ConfigurationManager.RefreshSection("connectionStrings");
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    MessageBox.Show(
+        //    //        "Er is iets misgegaan bij het koppelen van de database. Neem contact op met de maker van de applicatie.\n" +
+        //    //        ex.Message);
+        //    //}
+        //}
 
     }
 }

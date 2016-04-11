@@ -7,6 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Data.Entity.Core.EntityClient;
+using System.Data.SqlClient;
+
 namespace WpfBonApp.Model
 {
     using System;
@@ -15,11 +18,33 @@ namespace WpfBonApp.Model
     
     public partial class myDBEntities : DbContext
     {
+        //public myDBEntities()
+        //    : base("name=myDBEntities")
+        //{
+        //}
         public myDBEntities()
-            : base("name=myDBEntities")
+            : base(ConnectionString())
         {
         }
-    
+
+
+        private static string ConnectionString()
+        {
+            SqlConnectionStringBuilder sqlBuilder = new SqlConnectionStringBuilder();
+            sqlBuilder.DataSource = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Bon App\\myDB.db";
+            //sqlBuilder.InitialCatalog = "YYY";
+            //sqlBuilder.PersistSecurityInfo = true;
+            //sqlBuilder.IntegratedSecurity = true;
+            sqlBuilder.MultipleActiveResultSets = true;
+
+            EntityConnectionStringBuilder entityBuilder = new EntityConnectionStringBuilder();
+            entityBuilder.ProviderConnectionString = sqlBuilder.ToString();
+            entityBuilder.Metadata = "res://*/Model.ModelBon.csdl|res://*/Model.ModelBon.ssdl|res://*/Model.ModelBon.msl";
+            entityBuilder.Provider = "System.Data.SQLite.EF6";
+
+            return entityBuilder.ToString();
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
