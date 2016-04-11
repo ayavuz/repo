@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBonApp"
         mc:Ignorable="d"
-        Title="Bon Applicatie" Height="400" Width="600" ResizeMode="NoResize" WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico" Background="#99B2B7">
+        Title="Bon Applicatie" Height="400" Width="600" ResizeMode="CanMinimize"  WindowState="Maximized" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Icon="Bon.ico" Background="#99B2B7">
 
     <Window.Resources>
         <!--<Style TargetType="{x:Type TextBlock}">
