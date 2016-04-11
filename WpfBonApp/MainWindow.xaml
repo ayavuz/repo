@@ -60,6 +60,7 @@
             <MenuItem x:Name="menuStart" Height="40"  Header="Start" Click="menuStart_Click"/>
             <MenuItem x:Name="menuNieuw" Height="40" Header="Nieuw" Click="menuNieuw_Click"/>
             <MenuItem x:Name="menuBeheer" Height="40" Header="Beheer" Click="menuBeheer_Click"/>
+            <MenuItem x:Name="menuOver" Height="40" Header="Over" Click="menuOver_Click"/>
         </Menu>
 
         <ListBox Name="listboxCategorieen" Grid.Row="1" Grid.Column="0" PreviewMouseDown="listboxCategorieen_PreviewMouseDown">

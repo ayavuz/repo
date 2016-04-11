@@ -212,6 +212,12 @@ namespace WpfBonApp
             beheerWindow.ShowDialog();
         }
 
+        private void menuOver_Click(object sender, RoutedEventArgs e)
+        {
+            Over overWindow = new Over();
+            overWindow.ShowDialog();
+        }
+
         /// <summary>
         /// Artikel aan het mandje toevoegen en totaalprijs tonen
         /// </summary>

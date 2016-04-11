@@ -215,6 +215,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Over.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Prompt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,6 +257,9 @@
     </Compile>
     <Compile Include="Nieuw.xaml.cs">
       <DependentUpon>Nieuw.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Over.xaml.cs">
+      <DependentUpon>Over.xaml</DependentUpon>
     </Compile>
     <Compile Include="Prompt.xaml.cs">
       <DependentUpon>Prompt.xaml</DependentUpon>
